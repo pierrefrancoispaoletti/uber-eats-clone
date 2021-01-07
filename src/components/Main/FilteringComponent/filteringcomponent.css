@@ -1,0 +1,29 @@
+.filteringcomponent__nav {
+    overflow-x: auto;
+    padding: 8px 0px;
+    display: flex;  
+}
+.filteringcomponent__ul {
+    padding: 0px 8px ;
+    margin: auto;
+    display: flex;
+    align-items: flex-start;
+    list-style: none;
+}
+.filteringcomponent__li {
+    width: 80px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.filteringcomponent__imgwrap {
+    height: 60px;
+    width: 60px;
+    position: relative;
+}
+.filteringcomponent__img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}

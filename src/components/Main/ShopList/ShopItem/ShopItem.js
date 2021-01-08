@@ -1,16 +1,14 @@
-import React from 'react';
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 
-const RestaurantItem = ({name, price, image, rate }) => {
-    return (
-        <div className="restaurantlist__item">
+const ShopItem = ({ name, adress, image, open }) => {
+  const history = useHistory();
+  return (
+      <div onClick={e => history.replace('/shop')} className="shoplist__item">
         <figure height="148px">
-          <div className="restaurantlist__imgwrap">
+          <div className="shoplist__imgwrap">
             <picture>
-              <img
-                alt={name}
-                src={image}
-                aria-hidden="true"
-              />
+              <img alt={name} src={image} aria-hidden="true" />
             </picture>
           </div>
           <div className="like">
@@ -26,23 +24,23 @@ const RestaurantItem = ({name, price, image, rate }) => {
               </button>
             </div>
           </div>
-          <figcaption>
-            <div>
-              Ce restaurant ne livre pas en ce moment
-            </div>
-          </figcaption>
+          {open === false && (
+            <figcaption>
+              <div>Cette boutique est fermée</div>
+            </figcaption>
+          )}
         </figure>
         <div className="item__infos">
           <div className="item__info__1">
             <p className="info__name">{name}</p>
             <div className="item__info__2">
-              <div className="info__price">{price}</div>
+              <div className="info__price">{adress}</div>
             </div>
           </div>
-          <div className="info__rate">{rate}</div>
+          {/* <div className="info__rate">{rate}</div> */}
         </div>
       </div>
-    );
-}
+  );
+};
 
-export default RestaurantItem;
+export default ShopItem;

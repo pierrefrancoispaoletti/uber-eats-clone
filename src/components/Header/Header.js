@@ -9,11 +9,11 @@ const Header = () => {
     <div className="header">
       <Icon name="bars" />
       <Link to="/">
-        <img src="./assets/images/uber-eats.svg" />
+        <img className="header__img" src="./assets/images/kants.png" alt="kants logo"/>
       </Link>
       <div className="header__spacer"></div>
       <a href="#" className="header__button__connect">
-        Se&nbsp;Connecter
+        Se Connecter
       </a>
     </div>
   );

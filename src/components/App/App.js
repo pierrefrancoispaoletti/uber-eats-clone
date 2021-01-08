@@ -1,13 +1,13 @@
-
-import Header from '../Header/Header';
-import Main from '../Main/Main/Main';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+import Header from "../Header/Header";
+import Main from "../Main/Main/Main";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-    <Header />
-    <Main />
+      <Header />
+      <Main />
     </div>
   );
 }

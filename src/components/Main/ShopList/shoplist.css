@@ -1,14 +1,19 @@
-.restaurantlist {
+.shoplist {
   margin: 0px 16px;
 }
 
-.restaurantlist__item {
+.shoplist__item {
   margin-bottom: 32px;
   position: relative;
   z-index: 0;
 }
 
-.restaurantlist__item > figure {
+.shopList__shopType > h1{
+
+    text-transform: capitalize;
+}
+
+.shoplist__item > figure {
   height: 148px;
   background: rgb(246, 246, 246);
   margin: 0;
@@ -16,7 +21,7 @@
   position: relative;
 }
 
-.restaurantlist__item > figure >figcaption {
+.shoplist__item > figure >figcaption {
     padding: 8px;
     display: flex;
     justify-content: center;
@@ -30,14 +35,14 @@
     background: rgba(38, 38, 38, 0.8);
 }
 
-.restaurantlist__item > figure > figcaption > div{
+.shoplist__item > figure > figcaption > div{
     font-size: 18px;
     color: white;
     line-height: 24px;
     text-align: center;
 }
 
-.restaurantlist__imgwrap {
+.shoplist__imgwrap {
   position: absolute;
   left: 0px;
   top: 0px;
@@ -45,7 +50,7 @@
   width: 100%;
 }
 
-.restaurantlist__imgwrap > picture > img {
+.shoplist__imgwrap > picture > img {
   object-fit: cover;
   border: none;
   height: 100%;
@@ -134,8 +139,8 @@
     white-space: nowrap;
     overflow: hidden;
 }
-
-.info__rate {
+/* au cas ou rajouter cette classe afin de mettre une note a la boutique */
+/* .info__rate {
     flex: 0 0 28px;
     font-size: 12px;
     background: rgb(238,238,238);
@@ -146,5 +151,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
+} */
 

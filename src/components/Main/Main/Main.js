@@ -1,21 +1,26 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { Restaurants } from "../../../datas";
+import { Shops } from "../../../datas";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
 import Populaire from "../Populaire/Populaire";
-import RestaurantList from "../RestaurantList/RestaurantList";
+import Shop from "../Shop/Shop";
+import ShopList from "../ShopList/ShopList";
 
 const Main = () => {
   return (
+
     <div className="main">
       <FilteringComponent />
       <Populaire />
       <Switch>
-        <Route exact path="/">
-          <RestaurantList restaurants={Restaurants} />
+      <Route exact path="/">
+          <ShopList shops={Shops} />
         </Route>
-        <Route path="/:category">
-          <RestaurantList restaurants={Restaurants} />
+        <Route  path="/type/:type">
+          <ShopList shops={Shops} />
+        </Route>
+        <Route path="/shop/:shop">
+          <Shop />
         </Route>
       </Switch>
     </div>

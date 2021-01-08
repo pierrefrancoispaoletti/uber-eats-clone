@@ -1,19 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MenuItems } from "../../../datas";
+import { MerchantType } from "../../../datas";
 import "./filteringcomponent.css";
 
 const FilteringComponent = () => {
   return (
     <nav className="filteringcomponent__nav">
       <ul className="filteringcomponent__ul">
-        {MenuItems.map((item) => (
-          <Link to={`/${item.route}`}>
+        {MerchantType.map((type) => (
+          <Link to={`/type/${type.route}`} >
             <li className="filteringcomponent__li">
               <div className="filteringcomponent__imgwrap">
-                <img className="filteringcomponent__img" src={item.image} />
+                <img className="filteringcomponent__img" src={type.image} alt={type.name} />
               </div>
-              <p>{item.name}</p>
+              <span className="filteringcomponent__span">
+                <div className="filteringcomponent__span__div">{type.name}</div>
+              </span>
             </li>
           </Link>
         ))}

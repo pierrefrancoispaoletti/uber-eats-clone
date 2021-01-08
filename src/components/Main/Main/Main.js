@@ -8,7 +8,6 @@ import ShopList from "../ShopList/ShopList";
 
 const Main = () => {
   return (
-
     <div className="main">
       <FilteringComponent />
       <Populaire />
@@ -19,7 +18,7 @@ const Main = () => {
         <Route  path="/type/:type">
           <ShopList shops={Shops} />
         </Route>
-        <Route path="/shop/:shop">
+        <Route path="/shop/:shop/:id">
           <Shop />
         </Route>
       </Switch>

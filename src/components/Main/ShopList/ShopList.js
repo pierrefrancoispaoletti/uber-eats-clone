@@ -14,6 +14,7 @@ const ShopList = ({ shops }) => {
     })
     .filter((e) => e !== undefined);
 
+
   return (
     <div className="shopList">
       {type ? (
@@ -26,7 +27,7 @@ const ShopList = ({ shops }) => {
             </h2>
           </div>
           {filteredShops?.map((shop) => (
-            <Link to={`/shop/${slugifyUrl(shop.name)}`}>
+            <Link to={`/shop/${slugifyUrl(shop.name)}/${shop.id}`}>
               <ShopItem key={shop.id} {...shop} />
             </Link>
           ))}
@@ -34,7 +35,7 @@ const ShopList = ({ shops }) => {
       ) : (
         <>
           {shops?.map((shop) => (
-            <Link to={`/shop/${slugifyUrl(shop.name)}`}>
+            <Link to={`/shop/${slugifyUrl(shop.name)}/${shop.id}`}>
               <ShopItem key={shop.id} {...shop} />
             </Link>
           ))}

@@ -9,7 +9,7 @@ const Header = () => {
     <div className="header">
       <Icon name="bars" />
       <Link to="/">
-        <img className="header__img" src="./assets/images/kants.png" alt="kants logo"/>
+        <img className="header__img" src="/assets/images/kants.png" alt="kants logo"/>
       </Link>
       <div className="header__spacer"></div>
       <a href="#" className="header__button__connect">

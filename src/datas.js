@@ -2,67 +2,67 @@ export const MerchantType = [
   // merchants type
   {
     name: "Burger",
-    image: "./assets/images/burger.png",
+    image: "/assets/images/burger.png",
     route: "burger",
   },
   {
     name: "Fast-Food",
-    image: "./assets/images/fastfood.png",
+    image: "/assets/images/fastfood.png",
     route: "fast-food",
   },
   {
     name: "Americain",
-    image: "./assets/images/american.png",
+    image: "/assets/images/american.png",
     route: "american",
   },
   {
     name: "Barbecue",
-    image: "./assets/images/bbq.png",
+    image: "/assets/images/bbq.png",
     route: "barbecue",
   },
   {
     name: "Ailes de poulet",
-    image: "./assets/images/wings.png",
+    image: "/assets/images/wings.png",
     route: "wings",
   },
   {
     name: "Sushi",
-    image: "./assets/images/sushi.png",
+    image: "/assets/images/sushi.png",
     route: "sushi",
   },
   {
     name: "Japonais",
-    image: "./assets/images/japanese.png",
+    image: "/assets/images/japanese.png",
     route: "japanese",
   },
   {
     name: "Asiatique",
-    image: "./assets/images/asian.png",
+    image: "/assets/images/asian.png",
     route: "asian",
   },
   {
     name: "Burger",
-    image: "./assets/images/thai.png",
+    image: "/assets/images/thai.png",
     route: "thai",
   },
   {
     name: "Italien",
-    image: "./assets/images/italian.png",
+    image: "/assets/images/italian.png",
     route: "italian",
   },
   {
     name: "Pizza",
-    image: "./assets/images/pizza.png",
+    image: "/assets/images/pizza.png",
     route: "pizza",
   },
   {
     name: "Français",
-    image: "./assets/images/french.png",
+    image: "/assets/images/french.png",
     route: "french",
   },
   {
     name: "Halal",
-    image: "./assets/images/halal.png",
+    image: "/assets/images/halal.png",
     route: "halal",
   },
 ];
@@ -103,47 +103,42 @@ export const Shops = [
 
 export const merchantCategories = [
   {
-    id:11,
+    id: 11,
     merchantId: 1,
-    name: 'Poulet',
-
+    name: "Poulet",
   },
   {
-    id:12,
+    id: 12,
     merchantId: 1,
-    name: 'Viande',
-
+    name: "Viande",
   },
   {
-    id:13,
+    id: 13,
     merchantId: 1,
-    name: 'Tortue',
-
+    name: "Tortue",
   },
 ];
 
 export const merchantSubcategories = [
   {
     id: 111,
-    name: 'simple',
+    name: "simple",
     price: 18,
-    description: "une tranche de pain , une tranche de viande , une tranche de pain",
+    description:
+      "une tranche de pain , une tranche de viande , une tranche de pain",
     categoryId: 11,
     options: {
-      Ingredients: [
-
-      ]
-    }
-
-  }
-]
+      Ingredients: [],
+    },
+  },
+];
 
 export const Products = [
   {
     name: "Burger de la mort",
     price: 18,
     description: "le burger ultime",
-    urlImage: "./assets/images/burger-de-la-mort.jpeg",
+    urlImage: "/assets/images/burger-de-la-mort.jpeg",
     options: {
       taille: "XXXXL",
     },
@@ -154,7 +149,7 @@ export const Products = [
     name: "Turtle Burger",
     price: 36,
     description: "Fan des tortues ninja ? ce burger est fait pour vous !",
-    urlImage: "./assets/images/turtle-burger.jpg",
+    urlImage: "/assets/images/turtle-burger.jpg",
     options: {
       taille: "L",
     },

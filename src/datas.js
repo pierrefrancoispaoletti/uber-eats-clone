@@ -1,9 +1,19 @@
 export const MerchantType = [
   // merchants type
   {
-    name: "Burger",
+    name: "Vêtements et chaussures",
     image: "/assets/images/burger.png",
-    route: "burger",
+    route: "vetements",
+  },
+  {
+    name: "Soin du corps",
+    image: "/assets/images/burger.png",
+    route: "soins",
+  },
+  {
+    name: "Autres...",
+    image: "/assets/images/burger.png",
+    route: "autres",
   },
   {
     name: "Fast-Food",

@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import Product from "./Product/Product";
 
-const Products = ({ name, price, description, urlImage }) => {
-  //une fois qu'on a recupéré le marchand ici on pourra recuperer separement les categories et les produits
+const Products = ({ name, price, description, urlImage, merchantId }) => {
+
+  // ici requete au back pour recuperer les categories, sous categories , et ainsi les produits vendus par le merchant
+  console.log(merchantId);
+  const [isOpenProductModal, setIsOpenProductModal] = useState(false);
   return (
+    <>
     <div className="products">
       <ul className="products__header">
         <li>
           <h2>titre de la categorie du produit ex: Vetements, Poulet</h2>
           <ul className="products__list">
             <li>
-              <div tabIndex={0}>
+              <div tabIndex={0} onClick={e => setIsOpenProductModal(true)}>
                 <div className="first">
                   <div className="second">
                     <div className="third">
@@ -22,7 +27,7 @@ const Products = ({ name, price, description, urlImage }) => {
                         <div>{description}</div>
                       </div>
                       <div className="product__price">
-                        <div>{price}</div>
+                        <div>{price} €</div>
                       </div>
                     </div>
                     <div className="product__img">
@@ -31,7 +36,6 @@ const Products = ({ name, price, description, urlImage }) => {
                           alt="Escalope panée"
                           src={urlImage}
                           aria-hidden="true"
-                          class="e2 fj gg e1 gh gi"
                         />
                       </picture>
                     </div>
@@ -43,6 +47,8 @@ const Products = ({ name, price, description, urlImage }) => {
         </li>
       </ul>
     </div>
+    <Product isOpenProductModal={isOpenProductModal} setIsOpenProductModal={setIsOpenProductModal} />
+    </>
   );
 };
 

@@ -1,42 +1,46 @@
-import React from "react";
-import { Link, Redirect, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { slugifyUrl } from "../../../utils";
 import ShopItem from "./ShopItem/ShopItem";
 import "./shoplist.css";
 
 const ShopList = ({ shops }) => {
   const { type } = useParams();
+  const slugifiedType = slugifyUrl(type);
   const filteredShops = shops
-    .map((shop) => {
-      if (shop.merchantType.some((t) => t === type)) {
+    ?.map((shop) => {
+      if (slugifyUrl(shop?.type) === slugifiedType) {
         return shop;
+      } else {
+        return undefined;
       }
     })
     .filter((e) => e !== undefined);
-
-
   return (
     <div className="shopList">
-      {type ? (
+      {type && shops !== {} ? (
         <>
           <div className="shopList__shopType">
             <h1>« {type} »</h1>
             <h2>
-              {filteredShops?.length}{" "}
-              {filteredShops.length > 1 ? "Shops" : "Shop"}
+              {filteredShops?.length || 0 }{" "}
+              {filteredShops?.length > 1 ? "Shops" : "Shop"}
             </h2>
           </div>
-          {filteredShops?.map((shop) => (
-            <Link to={`/shop/${slugifyUrl(shop.name)}/${shop.id}`}>
-              <ShopItem key={shop.id} {...shop} />
-            </Link>
-          ))}
+          {filteredShops?.map(
+            (shop) =>
+              shop.name && (
+                <Link to={`/shop/${slugifyUrl(shop?.name)}/${shop._id}`}>
+                  <ShopItem key={shop?._id} {...shop} />
+                </Link>
+              )
+          )}
         </>
       ) : (
         <>
           {shops?.map((shop) => (
-            <Link to={`/shop/${slugifyUrl(shop.name)}/${shop.id}`}>
-              <ShopItem key={shop.id} {...shop} />
+            <Link to={`/shop/${slugifyUrl(shop?.name)}/${shop?._id}`}>
+              <ShopItem key={shop?._id} {...shop} />
             </Link>
           ))}
         </>

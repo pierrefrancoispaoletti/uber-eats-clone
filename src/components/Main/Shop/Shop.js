@@ -1,18 +1,23 @@
 import React from "react";
 import Products from "./Products/Products";
 import { useParams } from "react-router-dom";
-import { Products as shopProducts, Shops } from "../../../datas";
+import { Products as shopProducts } from "../../../datas";
 import "./shop.css";
 import Top from "./Top/Top";
 
-const Shop = () => {
+const Shop = ({ shops }) => {
   const { id } = useParams();
-  //ici requete ajax pour recuperer le merchant par l'id app.get('/category/:merchantId'
+    const findShopById = shops.map((shop) => {
+      if (shop._id === id) {
+        return shop;
+      }
+    }).find((e) => e !== undefined)
+  ;
   return (
     <div className="shop">
-      <Top {...Shops[0]} />
-      {shopProducts.map((product) => (
-        <Products key={product.id} {...product} />
+      <Top {...findShopById} />
+      {shopProducts?.map((product) => (
+        <Products merchantId={findShopById._id} key={product?.id} {...product} />
       ))}
     </div>
   );

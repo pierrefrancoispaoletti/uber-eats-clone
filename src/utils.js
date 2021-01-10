@@ -1,6 +1,6 @@
 import slugify from "slugify"
 
-export const slugifyUrl = (shopName) => {
+export const slugifyUrl = (shopName = '') => {
 
     return slugify(shopName, {
         replacement: "-",

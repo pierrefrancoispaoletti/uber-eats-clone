@@ -1,22 +1,39 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { Shops } from "../../../datas";
+import { Route, Switch, useLocation } from "react-router-dom";
+import { Divider } from "semantic-ui-react";
+import AddressComponent from "../../../containers/AddressComponent/AddressComponent.container";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
-import Populaire from "../Populaire/Populaire";
-import Shop from "../Shop/Shop";
+import Shop from "../../../containers/Shop/Shop.container";
 import ShopList from "../ShopList/ShopList";
+import "./main.css";
 
-const Main = () => {
+const Main = ({ shops }) => {
+  const location = useLocation();
+  console.log(shops)
   return (
     <div className="main">
       <FilteringComponent />
-      <Populaire />
+      {location.pathname === "/" && (
+        <>
+          <Divider />
+          <AddressComponent />
+          <Divider />
+        </>
+      )}
       <Switch>
-      <Route exact path="/">
-          <ShopList shops={Shops} />
+        <Route exact path="/">
+          {shops ? (
+            <ShopList shops={shops} />
+          ) : (
+            <p>désolé il n'y a pas de boutiques a afficher proche de vous</p>
+          )}
         </Route>
-        <Route  path="/type/:type">
-          <ShopList shops={Shops} />
+        <Route path="/type/:type">
+          {shops ? (
+            <ShopList shops={shops} />
+          ) : (
+            <p>désolé il n'y a pas de boutiques a afficher proche de vous</p>
+          )}
         </Route>
         <Route path="/shop/:shop/:id">
           <Shop />

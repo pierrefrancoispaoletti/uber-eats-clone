@@ -1,13 +1,17 @@
-import { Route, Switch } from "react-router-dom";
+import { useState } from "react";
 import Header from "../Header/Header";
-import Main from "../Main/Main/Main";
+import HeaderMenu from "../Header/HeaderMenu/HeaderMenu";
+import Main from "../../containers/Main/Main.container";
 import "./App.css";
 
 function App() {
+  const [visible, setVisible] = useState(false);
   return (
     <div className="App">
-      <Header />
-      <Main />
+      <HeaderMenu visible={visible} setVisible={setVisible}>
+        <Header visible={visible} setVisible={setVisible} />
+        <Main />
+      </HeaderMenu>
     </div>
   );
 }

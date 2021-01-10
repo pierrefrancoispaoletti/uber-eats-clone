@@ -1,71 +1,61 @@
-import React from "react";
-import {
-  Button,
-  Container,
-  Divider,
-  Form,
-  Image,
-  Modal,
-  Radio,
-} from "semantic-ui-react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import ProductModal from "./ProductModal";
 
-const Product = ({ isOpenProductModal, setIsOpenProductModal }) => {
+const Product = ({ categoryId }) => {
+  const [products, setProducts] = useState([]);
+  const [isOpenProductModal, setIsOpenProductModal] = useState(false);
+  const [productId, setProductId] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`/products/category/${categoryId}`)
+      .then((response) => setProducts(response.data.data));
+  }, []);
+
+  const handleClick = (id) => {
+    setIsOpenProductModal(true);
+    setProductId(id);
+  };
   return (
-    <Modal
-      centered
-      closeIcon
-      open={isOpenProductModal}
-      onClose={() => setIsOpenProductModal(false)}
-    >
-      <Modal.Header>titre du produit</Modal.Header>
-      <Modal.Content image>
-        <Image
-          centered
-          size="medium"
-          src="/assets/images/turtle-burger.jpg"
-          alt=""
-        />
-      </Modal.Content>
-      <Container textAlign="center">
-        <Modal.Description>
-          <p>Description du produit</p>
-        </Modal.Description>
-      </Container>
-      <Divider />
-      <Modal.Content>
-        <Form>
-          <Form.Field>Choisissez la couleur :</Form.Field>
-          <Form.Field>
-            <Radio label="Choose this" name="radioGroup" value="this" />
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Or that" name="radioGroup" value="that" />
-          </Form.Field>
-          <Divider />
-          <Form.Field>Choisissez la Taille :</Form.Field>
-          <Form.Field>
-            <Radio label="Choose this" name="radioGroup" value="this" />
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Or that" name="radioGroup" value="that" />
-          </Form.Field>
-          <Divider />
-          <Container textAlign="center">
-            <Button circular icon="minus" />
-                <Button disabled>
-                    qty
-                </Button>
-            <Button circular icon="plus" />
-          </Container>
-        </Form>
-        <Divider />
-        <Container textAlign="center">
-          <Button size="large" color="black">
-            Ajouter au panier x Articles
-          </Button>
-        </Container>
-      </Modal.Content>
-    </Modal>
+    <>
+      {products.map((product) => (
+        <div tabIndex={0} onClick={(e) => handleClick(product._id)}>
+          <div className="first">
+            <div className="second">
+              <div className="third">
+                <div className="fourth">
+                  <h4>
+                    <div className="product__title">{product.name}</div>
+                  </h4>
+                </div>
+                <div className="product__description">
+                  <div>{product.description}</div>
+                </div>
+                <div className="product__price">
+                  <div>{product.price} €</div>
+                </div>
+              </div>
+              <div className="product__img">
+                <picture>
+                  <img
+                    alt={product.name}
+                    src={product.urlImage}
+                    aria-hidden="true"
+                  />
+                </picture>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      <ProductModal
+        isOpenProductModal={isOpenProductModal}
+        setIsOpenProductModal={setIsOpenProductModal}
+        productId={productId}
+        products={products}
+      />
+    </>
   );
 };
 

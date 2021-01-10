@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MerchantType } from "../../../datas";
-import { slugifyUrl } from "../../../utils";
 import "./filteringcomponent.css";
 
 const FilteringComponent = () => {

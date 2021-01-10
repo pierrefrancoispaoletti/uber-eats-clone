@@ -6,10 +6,10 @@ import FilteringComponent from "../FilteringComponent/FilteringComponent";
 import Shop from "../../../containers/Shop/Shop.container";
 import ShopList from "../ShopList/ShopList";
 import "./main.css";
+import Login from "../../../containers/Login/Login.container";
 
 const Main = ({ shops }) => {
   const location = useLocation();
-  console.log(shops)
   return (
     <div className="main">
       <FilteringComponent />
@@ -37,6 +37,9 @@ const Main = ({ shops }) => {
         </Route>
         <Route path="/shop/:shop/:id">
           <Shop />
+        </Route>
+        <Route>
+          <Login path="/login" />
         </Route>
       </Switch>
     </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button} from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 import "./header.css";
 
@@ -17,9 +17,11 @@ const Header = ({ setVisible, visible }) => {
           />
         </Link>
         <div className="header__spacer"></div>
-        <a href="#" className="header__button__connect">
-          Se Connecter
-        </a>
+        <Link to="/login">
+          <a href="#" className="header__button__connect">
+            Se Connecter
+          </a>
+        </Link>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Divider } from "semantic-ui-react";
 import AddressComponent from "../../../containers/AddressComponent/AddressComponent.container";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
@@ -7,8 +7,9 @@ import Shop from "../../../containers/Shop/Shop.container";
 import ShopList from "../ShopList/ShopList";
 import "./main.css";
 import Login from "../../../containers/Login/Login.container";
+import Checkout from "../../../containers/Checkout/Chekout.container";
 
-const Main = ({ shops }) => {
+const Main = ({ shops, user }) => {
   const location = useLocation();
   return (
     <div className="main">
@@ -16,7 +17,7 @@ const Main = ({ shops }) => {
       {location.pathname === "/" && (
         <>
           <Divider />
-          <AddressComponent />
+          <AddressComponent userAddress={user?.address || ""} />
           <Divider />
         </>
       )}
@@ -36,11 +37,10 @@ const Main = ({ shops }) => {
           )}
         </Route>
         <Route path="/shop/:shop/:id">
-          <Shop />
+          {user ? <Shop /> : <Redirect to="/login" />}
         </Route>
-        <Route>
-          <Login path="/login" />
-        </Route>
+        <Route path="/login">{!user ? <Login /> : <Redirect to="/" />}</Route>
+        <Route path="/cart">{user ? <Checkout /> : <Redirect to="/" />}</Route>
       </Switch>
     </div>
   );

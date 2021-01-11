@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import ProductModal from "./ProductModal";
+import ProductModal from "../../../../../containers/ProductModal/ProductModal.container";
+import { uniqueKeyID } from "../../../../../utils";
 
 const Product = ({ categoryId }) => {
   const [products, setProducts] = useState([]);
@@ -20,7 +21,7 @@ const Product = ({ categoryId }) => {
   return (
     <>
       {products.map((product) => (
-        <div tabIndex={0} onClick={(e) => handleClick(product._id)}>
+        <div key={uniqueKeyID()} tabIndex={0} onClick={(e) => handleClick(product._id)}>
           <div className="first">
             <div className="second">
               <div className="third">

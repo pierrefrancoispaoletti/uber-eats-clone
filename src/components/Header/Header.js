@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 
 import "./header.css";
 
-const Header = ({ setVisible, visible }) => {
+const Header = ({ setVisible, user, logout, cart }) => {
   return (
     <>
       <div className="header">
@@ -17,10 +17,22 @@ const Header = ({ setVisible, visible }) => {
           />
         </Link>
         <div className="header__spacer"></div>
-        <Link to="/login">
-          <a href="#" className="header__button__connect">
-            Se Connecter
-          </a>
+        {!user ? (
+          <Link to="/login">
+            <Button circular color="blue" size="mini" content="Se Connecter" />
+          </Link>
+        ) : (
+          <Button
+            onClick={(e) => logout()}
+            circular
+            color="red"
+            content="Deconnexion"
+            size="mini"
+          />
+        )}
+        <Link to="/cart">
+          <Icon name="cart" size="large" color="green" />
+          <small>{cart?.length}</small>
         </Link>
       </div>
     </>

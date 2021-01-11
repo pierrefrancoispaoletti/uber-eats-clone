@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Container, Form, Input } from "semantic-ui-react";
 
-const AddressComponent = ({ getMerchants }) => {
+const AddressComponent = ({ getMerchants, userAddress }) => {
   // une fois que l'utilisateur est connécté on recupére son adresse dans le use State
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(userAddress);
   const handleSubmit = (e) => {
     e.preventDefault();
     getMerchants(address);

@@ -1,21 +1,21 @@
 import React from "react";
 import Products from "./Products/Products";
 import { useParams } from "react-router-dom";
-import { Products as shopProducts } from "../../../datas";
 import "./shop.css";
 import Top from "./Top/Top";
 import { useEffect } from "react/cjs/react.development";
 import { useState } from "react";
 import axios from "axios";
+import { uniqueKeyID } from "../../../utils";
 
 const Shop = ({ shops }) => {
   const { id } = useParams();
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`/category/${id}`)
-      .then((response) => setCategories(response.data.data));
+    axios.get(`/category/${id}`).then((response) => {
+      setCategories(response.data.data);
+    });
   }, []);
 
   const findShopById = shops
@@ -28,7 +28,7 @@ const Shop = ({ shops }) => {
   return (
     <div className="shop">
       <Top {...findShopById} />
-      <Products categories={categories} />
+      <Products key={uniqueKeyID()} categories={categories} />
     </div>
   );
 };

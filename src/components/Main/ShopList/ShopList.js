@@ -30,8 +30,8 @@ const ShopList = ({ shops }) => {
           {filteredShops?.map(
             (shop) =>
               shop.name && (
-                <Link to={`/shop/${slugifyUrl(shop?.name)}/${shop._id}`}>
-                  <ShopItem key={shop?._id} {...shop} />
+                <Link key={shop?._id} to={`/shop/${slugifyUrl(shop?.name)}/${shop._id}`}>
+                  <ShopItem {...shop} />
                 </Link>
               )
           )}
@@ -39,8 +39,8 @@ const ShopList = ({ shops }) => {
       ) : (
         <>
           {shops?.map((shop) => (
-            <Link to={`/shop/${slugifyUrl(shop?.name)}/${shop?._id}`}>
-              <ShopItem key={shop?._id} {...shop} />
+            <Link key={shop?._id} to={`/shop/${slugifyUrl(shop?.name)}/${shop?._id}`}>
+              <ShopItem {...shop} />
             </Link>
           ))}
         </>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { MerchantType } from "../../../datas";
+import { uniqueKeyID } from "../../../utils";
 import "./filteringcomponent.css";
 
 const FilteringComponent = () => {
@@ -8,7 +9,7 @@ const FilteringComponent = () => {
     <nav className="filteringcomponent__nav">
       <ul className="filteringcomponent__ul">
         {MerchantType.map((type) => (
-          <Link to={`/type/${type.name}`} >
+          <Link key={uniqueKeyID()} to={`/type/${type.name}`} >
             <li className="filteringcomponent__li">
               <div className="filteringcomponent__imgwrap">
                 <img className="filteringcomponent__img" src={type.image} alt={type.name} />

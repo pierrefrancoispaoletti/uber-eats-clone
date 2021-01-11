@@ -1,14 +1,27 @@
-import { LOGIN, setUser } from "../../actions/kants";
+import { LOGIN, LOGOUT, setUser } from "../../actions/kants";
 import Axios from "axios";
 
 const userMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case LOGIN: {
-      console.log(action.user)
       Axios.post("/login", action.user)
         .then((response) => {
-            console.log(response)
-            store.dispatch(setUser(response.data.data));
+          localStorage.setItem("user", JSON.stringify(response.data.data));
+          store.dispatch(setUser(response.data.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      next(action);
+      break;
+    }
+    case LOGOUT: {
+      Axios.get("/logout")
+        .then((response) => {
+          localStorage.removeItem("user");
+          localStorage.removeItem("cart");
+          store.dispatch(setUser(null));
+          window.location.href = "/login";
         })
         .catch((error) => {
           console.log(error);

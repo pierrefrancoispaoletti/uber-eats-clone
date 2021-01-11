@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Container,
@@ -8,35 +9,40 @@ import {
   Input,
 } from "semantic-ui-react";
 
-import './login.css';
+import "./login.css";
 
-const Login = ({user, login}) => {
-  console.log(user);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('')
+const Login = ({ user, login }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory();
 
-    const userCredentials = {
-      username: email,
-      password: password,
-    }
+  const userCredentials = {
+    username: email,
+    password: password,
+  };
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      login(userCredentials)
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login(userCredentials);
+    history.replace("/");
+  };
   return (
     <Container textAlign="center">
-        <Divider />
+      <Divider />
       <Container>
         <Header>Login</Header>
       </Container>
       <Divider />
       <Form onSubmit={handleSubmit}>
         <Form.Field label="E-mail" control={Input}>
-          <input value={email} onChange={e => setEmail(e.target.value)} />
+          <input value={email} onChange={(e) => setEmail(e.target.value)} />
         </Form.Field>
         <Form.Field control={Input} label="password">
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </Form.Field>
         <Divider />
         <Button

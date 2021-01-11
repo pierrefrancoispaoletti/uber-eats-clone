@@ -14,14 +14,36 @@ const ProductModal = ({
   setIsOpenProductModal,
   products,
   productId,
+  addToCart,
+  cart,
 }) => {
-  const productToFind = products?.map((product) => {
-    if (product?._id === productId) {
-      return product;
-    }
-  }).find((e) => e !== undefined);
+  const productToFind = products
+    ?.map((product) => {
+      if (product?._id === productId) {
+        return product;
+      }
+    })
+    .find((e) => e !== undefined);
 
-  console.log(productToFind);
+  const [quantity, setQuantity] = useState(1);
+
+  const item = {
+    id: productToFind?._id,
+    image: productToFind?.urlImage,
+    name: productToFind?.name,
+    quantity: quantity,
+    unitPrice: Number(productToFind?.price),
+  };
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    if (item.quantity > 0) {
+      addToCart(item);
+      setQuantity(1);
+    }
+    setIsOpenProductModal(false);
+  };
+
   return (
     <Modal
       centered
@@ -31,12 +53,7 @@ const ProductModal = ({
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>
       <Modal.Content image>
-        <Image
-          centered
-          size="medium"
-          src={productToFind?.urlImage}
-          alt=""
-        />
+        <Image centered size="tiny" src={productToFind?.urlImage} alt="" />
       </Modal.Content>
       <Container textAlign="center">
         <Modal.Description>
@@ -63,14 +80,35 @@ const ProductModal = ({
           </Form.Field>
           <Divider />
           <Container textAlign="center">
-            <Button circular icon="minus" />
-            <Button disabled>qty</Button>
-            <Button circular icon="plus" />
+            <Button
+              onClick={(e) =>
+                quantity <= 0 ? setQuantity(0) : setQuantity(quantity - 1)
+              }
+              circular
+              icon="minus"
+              color="red"
+            />
+            <Button disabled>
+              <strong>{quantity}</strong>
+            </Button>
+            <Button
+              color="green"
+              onClick={(e) => setQuantity(quantity + 1)}
+              circular
+              icon="plus"
+            />
           </Container>
           <Divider />
           <Container textAlign="center">
-            <Button size="large" color="black">
-              Ajouter au panier x Articles
+            <h2>Total des articles</h2>
+            <p>
+              {Number(productToFind?.price) * quantity} <small> € </small>{" "}
+            </p>
+          </Container>
+          <Divider />
+          <Container textAlign="center">
+            <Button onClick={handleAddToCart} size="large" color="black">
+              Ajouter au panier {quantity} Articles
             </Button>
           </Container>
         </Form>

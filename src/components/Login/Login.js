@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Button,
   Container,
@@ -30,7 +30,7 @@ const Login = ({ user, login }) => {
     <Container textAlign="center">
       <Divider />
       <Container>
-        <Header>Login</Header>
+        <h2>Connexion</h2>
       </Container>
       <Divider />
       <Form onSubmit={handleSubmit}>
@@ -44,6 +44,7 @@ const Login = ({ user, login }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Field>
+        <Link to="/lostpassword">Mot de passe perdu ?</Link>
         <Divider />
         <Button
           type="submit"
@@ -52,6 +53,7 @@ const Login = ({ user, login }) => {
           content="Se connecter"
         />
       </Form>
+      <Link to="/register"><p>Pas encore de compte ? S'enregistrer</p></Link> 
     </Container>
   );
 };

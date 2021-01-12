@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { removeFromCart, emptyCart } from "../../actions/kants";
+import { removeFromCart, emptyCart, updateCartQuantity } from "../../actions/kants";
 import Checkout from "../../components/Main/Checkout/Checkout";
 
 const mapStateToProps = (state) => ({
@@ -8,7 +8,8 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
   removeFromCart,
-  emptyCart
+  emptyCart,
+  updateCartQuantity,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

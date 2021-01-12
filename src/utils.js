@@ -13,3 +13,5 @@ export const uniqueKeyID = () => {
       .toString(16)
       .substring(1);
   };
+
+  export const getCartTotal = (cart) => cart?.reduce((amount, item) => Number(item.unitPrice * item.quantity) + amount, 0);

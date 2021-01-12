@@ -13,7 +13,7 @@ const HeaderMenu = ({ setVisible, visible, children, user }) => {
         onHide={() => setVisible(false)}
         vertical
         visible={visible}
-        width="wide"
+        width="thin"
       >
         <Link to="/">
           <Image centered size="medium" src="/assets/images/kants.png" />

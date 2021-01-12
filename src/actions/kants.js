@@ -10,6 +10,7 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const SET_CART = "SET_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 export const EMPTY_CART = "EMPTY_CART";
+export const UPDATE_CART ="UPDATE_CART";
 
 export const getMerchants = (userAddress) => ({
   type: GET_MERCHANTS,
@@ -52,4 +53,10 @@ export const removeFromCart = (id) => ({
 
 export const emptyCart = () => ({
   type: EMPTY_CART,
+});
+
+export const updateCartQuantity = (id, quantity) => ({
+  type: UPDATE_CART,
+  id,
+  quantity
 });

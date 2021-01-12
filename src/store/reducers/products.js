@@ -3,6 +3,7 @@ import {
   EMPTY_CART,
   REMOVE_FROM_CART,
   SET_CART,
+  UPDATE_CART,
 } from "../../actions/kants";
 
 const initialState = {
@@ -13,10 +14,10 @@ function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case ADD_TO_CART: {
       let localCart = [];
-      if(localStorage.cart) {
-        localCart = JSON.parse(localStorage.getItem('cart'))
-        localCart.push(action.item)
-        localStorage.setItem('cart', JSON.stringify(localCart))
+      if (localStorage.cart) {
+        localCart = JSON.parse(localStorage.getItem("cart"));
+        localCart.push(action.item);
+        localStorage.setItem("cart", JSON.stringify(localCart));
       }
       return {
         ...state,
@@ -35,10 +36,12 @@ function reducer(state = initialState, action = {}) {
         cart: [],
       };
     case REMOVE_FROM_CART: {
-      let localCart = JSON.parse(localStorage.getItem('cart'));
-      let newLocalCart = localCart.filter((product) => product.id !== action.id)
-      localStorage.setItem('cart', JSON.stringify(newLocalCart));
-      console.log(localCart)
+      let localCart = JSON.parse(localStorage.getItem("cart"));
+      let newLocalCart = localCart.filter(
+        (product) => product.id !== action.id
+      );
+      localStorage.setItem("cart", JSON.stringify(newLocalCart));
+      console.log(localCart);
       const index = state.cart.findIndex(
         (cartItem) => cartItem.id === action.id
       );
@@ -50,6 +53,18 @@ function reducer(state = initialState, action = {}) {
           `impossible de supprimer le produit (id: ${action.id}) il n'est pas dans le panier !`
         );
       }
+      return {
+        ...state,
+        cart: newCart,
+      };
+    }
+    case UPDATE_CART: {
+      const index = state.cart.findIndex(
+        (cartItem) => cartItem.id === action.id
+      );
+      let newCart = [...state.cart];
+      newCart[index].quantity = action.quantity;
+      
       return {
         ...state,
         cart: newCart,

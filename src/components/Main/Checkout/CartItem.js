@@ -1,8 +1,12 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Button, Card, Container, Divider, Image } from "semantic-ui-react";
 
-const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart}) => {
+const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart, updateCartQuantity}) => {
     const [itemQuantity, setItemQuantity] = useState(quantity);
+    if(itemQuantity !== quantity) {
+      updateCartQuantity(id, itemQuantity)
+    }
   return (
     <Card>
       <Card.Content>
@@ -13,7 +17,7 @@ const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart}) => {
         <Container textAlign="center" fluid>
           <Button
             onClick={(e) =>
-              itemQuantity <= 0 ? itemQuantity(0) : setItemQuantity(itemQuantity - 1)
+              itemQuantity <= 0 ? setItemQuantity(0) : setItemQuantity(itemQuantity - 1)
             }
             circular
             icon="minus"

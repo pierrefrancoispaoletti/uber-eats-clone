@@ -6,10 +6,10 @@ import {
   Form,
   Image,
   Modal,
-  Radio,
 } from "semantic-ui-react";
 
 const ProductModal = ({
+  filteredSubCategories,
   isOpenProductModal,
   setIsOpenProductModal,
   products,
@@ -17,6 +17,8 @@ const ProductModal = ({
   addToCart,
   cart,
 }) => {
+  const [quantity, setQuantity] = useState(1);
+
   const productToFind = products
     ?.map((product) => {
       if (product?._id === productId) {
@@ -25,7 +27,9 @@ const ProductModal = ({
     })
     .find((e) => e !== undefined);
 
-  const [quantity, setQuantity] = useState(1);
+  const options = filteredSubCategories(productToFind?.subCategoryId);
+
+  const [selectOption, setSelectOption] = useState({});
 
   const item = {
     id: productToFind?._id,
@@ -42,6 +46,18 @@ const ProductModal = ({
       setQuantity(1);
     }
     setIsOpenProductModal(false);
+  };
+
+  let test = {};
+  const handleChange = (e) => {
+    Object.entries(options).map((option) => {
+      console.log(option[0])
+      //option[0] retourne couleur taille, comment recuperer la valeur correspondante ?
+      Object.defineProperty(test, [option[0]], { value: "" });
+    });
+    setSelectOption(e.target.value);
+    console.log(test);
+    console.log(e.target.id, e.target.value);
   };
 
   return (
@@ -63,21 +79,22 @@ const ProductModal = ({
       <Divider />
       <Modal.Content>
         <Form>
-          <Form.Field>Choisissez la couleur :</Form.Field>
-          <Form.Field>
-            <Radio label="Choose this" name="radioGroup" value="this" />
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Or that" name="radioGroup" value="that" />
-          </Form.Field>
-          <Divider />
-          <Form.Field>Choisissez la Taille :</Form.Field>
-          <Form.Field>
-            <Radio label="Choose this" name="radioGroup" value="this" />
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Or that" name="radioGroup" value="that" />
-          </Form.Field>
+          {options &&
+            Object.entries(options).map((option) => (
+              <>
+                <Form.Field>{option[0]}</Form.Field>
+                <select
+                  id={option[0]}
+                  value={selectOption}
+                  onChange={handleChange}
+                >
+                  {option[1].map((value) => (
+                    <option value={value}>{value}</option>
+                  ))}
+                </select>
+              </>
+            ))}
+
           <Divider />
           <Container textAlign="center">
             <Button

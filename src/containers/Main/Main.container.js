@@ -5,7 +5,8 @@ import Main from "../../components/Main/Main/Main";
 
 const mapStateToProps = (state) => ({
     shops: state.merchants.merchants,
-    user: state.auth.user
+    user: state.auth.user,
+    loading: state.merchants.loading,
 });
 const mapDispatchToProps = {
 };

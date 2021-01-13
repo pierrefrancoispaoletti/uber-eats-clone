@@ -6,6 +6,7 @@ import ProductModal from "../../components/Main/Shop/Products/Product/ProductMod
 
 const mapStateToProps = (state) => ({
  cart: state.products.cart,
+ subCategories: state.shop.subCategories,
 });
 const mapDispatchToProps = {
     addToCart,

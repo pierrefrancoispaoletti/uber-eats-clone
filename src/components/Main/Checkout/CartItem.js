@@ -1,12 +1,14 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Image } from "semantic-ui-react";
 
 const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart, updateCartQuantity}) => {
     const [itemQuantity, setItemQuantity] = useState(quantity);
+   useEffect(() => {
     if(itemQuantity !== quantity) {
       updateCartQuantity(id, itemQuantity)
     }
+   }, [itemQuantity]);
   return (
     <Card>
       <Card.Content>

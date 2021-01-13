@@ -25,7 +25,6 @@ function reducer(state = initialState, action = {}) {
       };
     }
     case SET_CART:
-      console.log(action.recordedCart);
       return {
         ...state,
         cart: [...state.cart, ...action.recordedCart],
@@ -41,7 +40,6 @@ function reducer(state = initialState, action = {}) {
         (product) => product.id !== action.id
       );
       localStorage.setItem("cart", JSON.stringify(newLocalCart));
-      console.log(localCart);
       const index = state.cart.findIndex(
         (cartItem) => cartItem.id === action.id
       );

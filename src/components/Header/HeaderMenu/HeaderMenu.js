@@ -4,6 +4,7 @@ import { Icon, Image, Menu, Segment, Sidebar } from "semantic-ui-react";
 
 const HeaderMenu = ({ setVisible, visible, children, user }) => {
   const location = useLocation();
+  console.log(visible, 'header menu')
   return (
     <Sidebar.Pushable>
       <Sidebar

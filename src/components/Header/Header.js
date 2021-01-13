@@ -4,11 +4,12 @@ import { Button, Icon } from "semantic-ui-react";
 
 import "./header.css";
 
-const Header = ({ setVisible, user, logout, cart }) => {
+const Header = ({ setVisible, visible, user, logout, cart }) => {
+  console.log(visible, "header");
   return (
     <>
       <div className="header">
-        <Button circular icon="bars" onClick={(e) => setVisible(true)} />
+        <Button circular icon="bars" onClick={() => setVisible(true)} />
         <Link to="/">
           <img
             className="header__img"

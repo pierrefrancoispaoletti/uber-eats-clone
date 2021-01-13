@@ -4,18 +4,13 @@ import { useParams } from "react-router-dom";
 import "./shop.css";
 import Top from "./Top/Top";
 import { useEffect } from "react/cjs/react.development";
-import { useState } from "react";
-import axios from "axios";
 import { uniqueKeyID } from "../../../utils";
 
-const Shop = ({ shops }) => {
+const Shop = ({ shops, categories, getCategories, categoryLoader }) => {
   const { id } = useParams();
-  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    axios.get(`/category/${id}`).then((response) => {
-      setCategories(response.data.data);
-    });
+    getCategories(id);
   }, []);
 
   const findShopById = shops
@@ -28,7 +23,11 @@ const Shop = ({ shops }) => {
   return (
     <div className="shop">
       <Top {...findShopById} />
-      <Products key={uniqueKeyID()} categories={categories} />
+      <Products
+        categoryLoader={categoryLoader}
+        key={uniqueKeyID()}
+        categories={categories}
+      />
     </div>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "semantic-ui-react";
 
 const ProductModal = ({
-  filteredSubCategories,
+  subCategories,
   isOpenProductModal,
   setIsOpenProductModal,
   products,
@@ -17,8 +17,23 @@ const ProductModal = ({
   addToCart,
   cart,
 }) => {
+  const [selectOption, setSelectOption] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [o, setO] = useState(undefined);
 
+  //filtre les osus categories de produit
+  //pour trouver celle a laquelle le produit est rataché
+
+  const filteredSubCategories = (productSubId) => {
+    return subCategories
+      .map((subCategory) => {
+        if (subCategory._id === productSubId) {
+          return JSON.parse(subCategory.options);
+        }
+      })
+      .find((p) => p !== undefined);
+  };
+  // trouve de produit dans la liste dont l'id correspond
   const productToFind = products
     ?.map((product) => {
       if (product?._id === productId) {
@@ -28,8 +43,6 @@ const ProductModal = ({
     .find((e) => e !== undefined);
 
   const options = filteredSubCategories(productToFind?.subCategoryId);
-
-  const [selectOption, setSelectOption] = useState({});
 
   const item = {
     id: productToFind?._id,
@@ -48,17 +61,34 @@ const ProductModal = ({
     setIsOpenProductModal(false);
   };
 
-  let test = {};
+  let subCatObject = {};
   const handleChange = (e) => {
-    Object.entries(options).map((option) => {
-      console.log(option[0])
-      //option[0] retourne couleur taille, comment recuperer la valeur correspondante ?
-      Object.defineProperty(test, [option[0]], { value: "" });
-    });
+    Object.entries(options)
+      .reverse()
+      .map((option) => {
+        return Object.defineProperty(subCatObject, [option[0]], {
+          value: document.querySelector(`#${option[0]}`).value,
+          enumerable: true,
+        });
+      });
     setSelectOption(e.target.value);
-    console.log(test);
-    console.log(e.target.id, e.target.value);
+    setO(subCatObject);
   };
+  //console.log(o);
+
+  const filterFunction = (optionObject, items) => {
+    return items.map((item) => {
+      if (
+        Object.entries(item.options)
+          .toString()
+          .localeCompare(Object.entries(optionObject).toString()) === 0 && item.status === true
+      ) {
+        return item;
+      }
+    }).filter((e) => e !== undefined);
+  };
+
+  console.log(filterFunction(o, products))
 
   return (
     <Modal

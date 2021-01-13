@@ -1,9 +1,10 @@
-import { GET_MERCHANTS, setMerchants } from "../../actions/kants";
+import { GET_MERCHANTS, setLoading, setMerchants } from "../../actions/kants";
 import Axios from "axios";
 
 const merchantsMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_MERCHANTS: {
+      store.dispatch(setLoading(true));
       Axios({
         method: "post",
         url: "/listAllMerchants",
@@ -16,7 +17,8 @@ const merchantsMiddleware = (store) => (next) => (action) => {
         })
         .catch((error) => {
           console.log(error);
-        });
+        })
+        .finally(() => store.dispatch(setLoading(false)));
       next(action);
       break;
     }

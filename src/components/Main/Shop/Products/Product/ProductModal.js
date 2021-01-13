@@ -44,15 +44,14 @@ const ProductModal = ({
 
   const options = filteredSubCategories(productToFind?.subCategoryId);
 
-    const item = {
-      id: filterFunction(o, products)?._id,
-      image:filterFunction(o, products)?.urlImage,
-      name: filterFunction(o, products)?.name,
-      quantity: quantity,
-      unitPrice: Number(filterFunction(o, products)?.price),
-      options: filterFunction(o, products)?.options
-    };
-
+  const item = {
+    id: filterFunction(productToFind?.name, o, products)?._id,
+    image: filterFunction(productToFind?.name, o, products)?.urlImage,
+    name: filterFunction(productToFind?.name, o, products)?.name,
+    quantity: quantity,
+    unitPrice: Number(filterFunction(productToFind?.name, o, products)?.price),
+    options: filterFunction(productToFind?.name, o, products)?.options,
+  };
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -75,15 +74,15 @@ const ProductModal = ({
       });
     setO(subCatObject);
   };
-  console.log(o)
-  console.log(products)
-  console.log(filterFunction(o, products))
+  // console.log(o);
+  // console.log(products);
+  // console.log(filterFunction(productToFind?.name, o, products));
   return (
     <Modal
       centered
       closeIcon
       open={isOpenProductModal}
-      onClose={() => setIsOpenProductModal(false)}
+      onClose={() => {setIsOpenProductModal(false); setO(undefined)}}
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>
       <Modal.Content image>
@@ -101,11 +100,8 @@ const ProductModal = ({
             Object.entries(options).map((option) => (
               <>
                 <Form.Field>{option[0]}</Form.Field>
-                <select
-                  id={option[0]}
-                  defaultValue={0}
-                  onChange={handleChange}
-                >
+                <select id={option[0]} defaultValue={0} onChange={handleChange}>
+                  <option value=""></option>
                   {option[1].map((value) => (
                     <option value={value}>{value}</option>
                   ))}
@@ -142,7 +138,12 @@ const ProductModal = ({
           </Container>
           <Divider />
           <Container textAlign="center">
-            <Button disabled={!filterFunction(o, products)} onClick={handleAddToCart} size="large" color="black">
+            <Button
+              disabled={!filterFunction(productToFind?.name, o, products)}
+              onClick={handleAddToCart}
+              size="large"
+              color="black"
+            >
               Ajouter au panier {quantity} Articles
             </Button>
           </Container>

@@ -7,6 +7,7 @@ import {
   Image,
   Modal,
 } from "semantic-ui-react";
+import { filterFunction } from "../../../../../utils";
 
 const ProductModal = ({
   subCategories,
@@ -17,7 +18,6 @@ const ProductModal = ({
   addToCart,
   cart,
 }) => {
-  const [selectOption, setSelectOption] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [o, setO] = useState(undefined);
 
@@ -44,17 +44,19 @@ const ProductModal = ({
 
   const options = filteredSubCategories(productToFind?.subCategoryId);
 
-  const item = {
-    id: productToFind?._id,
-    image: productToFind?.urlImage,
-    name: productToFind?.name,
-    quantity: quantity,
-    unitPrice: Number(productToFind?.price),
-  };
+    const item = {
+      id: filterFunction(o, products)?._id,
+      image:filterFunction(o, products)?.urlImage,
+      name: filterFunction(o, products)?.name,
+      quantity: quantity,
+      unitPrice: Number(filterFunction(o, products)?.price),
+      options: filterFunction(o, products)?.options
+    };
+
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    if (item.quantity > 0) {
+    if (item?.quantity > 0) {
       addToCart(item);
       setQuantity(1);
     }
@@ -71,25 +73,11 @@ const ProductModal = ({
           enumerable: true,
         });
       });
-    setSelectOption(e.target.value);
     setO(subCatObject);
   };
-  //console.log(o);
-
-  const filterFunction = (optionObject, items) => {
-    return items.map((item) => {
-      if (
-        Object.entries(item.options)
-          .toString()
-          .localeCompare(Object.entries(optionObject).toString()) === 0 && item.status === true
-      ) {
-        return item;
-      }
-    }).filter((e) => e !== undefined);
-  };
-
+  console.log(o)
+  console.log(products)
   console.log(filterFunction(o, products))
-
   return (
     <Modal
       centered
@@ -115,7 +103,7 @@ const ProductModal = ({
                 <Form.Field>{option[0]}</Form.Field>
                 <select
                   id={option[0]}
-                  value={selectOption}
+                  defaultValue={0}
                   onChange={handleChange}
                 >
                   {option[1].map((value) => (
@@ -154,7 +142,7 @@ const ProductModal = ({
           </Container>
           <Divider />
           <Container textAlign="center">
-            <Button onClick={handleAddToCart} size="large" color="black">
+            <Button disabled={!filterFunction(o, products)} onClick={handleAddToCart} size="large" color="black">
               Ajouter au panier {quantity} Articles
             </Button>
           </Container>

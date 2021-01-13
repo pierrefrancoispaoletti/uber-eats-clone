@@ -2,24 +2,37 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Image } from "semantic-ui-react";
 
-const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart, updateCartQuantity}) => {
-    const [itemQuantity, setItemQuantity] = useState(quantity);
-   useEffect(() => {
-    if(itemQuantity !== quantity) {
-      updateCartQuantity(id, itemQuantity)
+const CartItem = ({
+  id,
+  name,
+  unitPrice,
+  image,
+  quantity,
+  removeFromCart,
+  updateCartQuantity,
+  options,
+}) => {
+  const [itemQuantity, setItemQuantity] = useState(quantity);
+  useEffect(() => {
+    if (itemQuantity !== quantity) {
+      updateCartQuantity(id, itemQuantity);
     }
-   }, [itemQuantity]);
+  }, [itemQuantity]);
   return (
     <Card>
       <Card.Content>
         <Image floated="left" size="small" src={image} />
         <h4>{name}</h4>
         <Card.Meta>{unitPrice * itemQuantity} €</Card.Meta>
+        <Card.Meta>Couleur: {options?.couleur}</Card.Meta>
+        <Card.Meta>Taille: {options?.taille}</Card.Meta>
         <Divider />
         <Container textAlign="center" fluid>
           <Button
             onClick={(e) =>
-              itemQuantity <= 0 ? setItemQuantity(0) : setItemQuantity(itemQuantity - 1)
+              itemQuantity <= 0
+                ? setItemQuantity(0)
+                : setItemQuantity(itemQuantity - 1)
             }
             circular
             icon="minus"
@@ -38,7 +51,12 @@ const CartItem = ({id, name, unitPrice, image, quantity, removeFromCart, updateC
           />
         </Container>
       </Card.Content>
-      <Button onClick={e => removeFromCart(id)} color="red" content="retirer du panier" circular />
+      <Button
+        onClick={(e) => removeFromCart(id)}
+        color="red"
+        content="retirer du panier"
+        circular
+      />
     </Card>
   );
 };

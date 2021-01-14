@@ -16,12 +16,11 @@ const ProductModal = ({
   products,
   productId,
   addToCart,
-  cart,
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [o, setO] = useState(undefined);
 
-  //filtre les osus categories de produit
+  //filtre les sous categories de produit
   //pour trouver celle a laquelle le produit est rataché
 
   const filteredSubCategories = (productSubId) => {
@@ -82,7 +81,11 @@ const ProductModal = ({
       centered
       closeIcon
       open={isOpenProductModal}
-      onClose={() => {setIsOpenProductModal(false); setO(undefined)}}
+      onOpen={() => setIsOpenProductModal(true)}
+      onClose={() => {
+        setIsOpenProductModal(false);
+        setO(undefined);
+      }}
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>
       <Modal.Content image>

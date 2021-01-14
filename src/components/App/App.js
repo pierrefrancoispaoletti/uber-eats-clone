@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "../../containers/Header/Header.container";
-import HeaderMenu from "../Header/HeaderMenu/HeaderMenu";
+import HeaderMenu from "../../containers/Header/HeaderMenu.container";
 import Main from "../../containers/Main/Main.container";
 import "./App.css";
 
 function App({ user, setUser, setCart, cart }) {
-  const [visible, setVisible] = useState(false);
   useEffect(() => {
     if (!user && localStorage.user) {
       const localUser = JSON.parse(localStorage.user);
@@ -18,16 +17,16 @@ function App({ user, setUser, setCart, cart }) {
     }
   }, []);
   useEffect(() => {
-    if(JSON.parse(localStorage.getItem('cart')) !== []) {
-      const localCart = JSON.parse(localStorage.getItem('cart'))
-      console.log(cart[0])
-      setCart(localCart)
+    if (JSON.parse(localStorage.getItem("cart")) !== []) {
+      const localCart = JSON.parse(localStorage.getItem("cart"));
+      console.log(cart[0]);
+      setCart(localCart);
     }
   }, []);
   return (
     <div className="App">
-      <HeaderMenu visible={visible} setVisible={setVisible} user={user}>
-        <Header visible={visible} setVisible={setVisible} />
+      <HeaderMenu user={user}>
+        <Header />
         <Main />
       </HeaderMenu>
     </div>

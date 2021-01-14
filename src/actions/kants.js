@@ -1,6 +1,8 @@
 export const GET_MERCHANTS = "GET_MERCHANTS";
 export const SET_MERCHANTS = "SET_MERCHANTS";
 
+export const SET_VISIBLE = "SET_VISIBLE" // HEADER MENU FAIRE DESCENDRE DEPUIS APP
+
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
@@ -32,6 +34,11 @@ export const setMerchants = (merchants) => ({
   type: SET_MERCHANTS,
   merchants,
 });
+
+export const setVisible = (visible) => ({
+  type: SET_VISIBLE,
+  visible
+})
 
 export const login = (user) => ({
   type: LOGIN,

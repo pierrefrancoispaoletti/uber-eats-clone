@@ -4,14 +4,19 @@ import { Icon, Image, Menu, Segment, Sidebar } from "semantic-ui-react";
 
 const HeaderMenu = ({ setVisible, visible, children, user }) => {
   const location = useLocation();
-  console.log(visible, 'header menu')
+  const handleOnHide = (e,data) => {
+    if(!e.target.classList.contains('NoClose')) {
+      setVisible(false)
+    }
+  }
   return (
     <Sidebar.Pushable>
       <Sidebar
         as={Menu}
         animation="overlay"
         icon="labeled"
-        onHide={() => setVisible(false)}
+        onShow={() => setVisible(true)}
+        onHide={(e, data) => handleOnHide(e,data)}
         vertical
         visible={visible}
         width="thin"
@@ -51,9 +56,7 @@ const HeaderMenu = ({ setVisible, visible, children, user }) => {
             </Link>
             {user.userId.typeUser === "Merchant" && (
               <Link to="/store-manager">
-                <Menu.Item
-                  active={location.pathname === "/store-manager"}
-                >
+                <Menu.Item active={location.pathname === "/store-manager"}>
                   <Icon name="money bill alternate" />
                   Gérer ma boutique
                 </Menu.Item>

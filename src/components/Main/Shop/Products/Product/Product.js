@@ -25,44 +25,6 @@ const Product = ({
     getSubCategories(categoryId);
   }, []);
 
-  // // renvoit un objet contenant 2 tableaux d'options
-
-  // const filterFunction = (
-  //   option1 = "",
-  //   option2 = "",
-  //   arg = "",
-  //   arg2 = "",
-  //   items
-  // ) => {
-  //   return items
-  //     .map((item) => {
-  //       if (option1 && option2) {
-  //         if (
-  //           item?.options[option1] === arg &&
-  //           item?.options[option2] === arg2 &&
-  //           item?.status === true
-  //         ) {
-  //           return item;
-  //         }
-  //       }
-  //       if (option1 && option2 === "") {
-  //         if (item.options[option1] === arg && item.status === true) {
-  //           return item;
-  //         }
-  //       }
-  //       if (option2 && option1 === "") {
-  //         if (item.options[option2] === arg2 && item.status === true) {
-  //           return item;
-  //         }
-  //       } else {
-  //         return item;
-  //       }
-  //     })
-  //     .filter((i) => i !== false && i !== undefined);
-  // };
-
-  // //console.log(filterFunction("", "", "", "", products));
-
   const handleClick = (id) => {
     setIsOpenProductModal(true);
     setProductId(id);

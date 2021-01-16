@@ -54,7 +54,7 @@ const HeaderMenu = ({ setVisible, visible, children, user }) => {
                 Mon Compte
               </Menu.Item>
             </Link>
-            {user.userId.typeUser === "Merchant" && (
+            {user.userId?.typeUser === "Merchant" && (
               <Link to="/store-manager">
                 <Menu.Item active={location.pathname === "/store-manager"}>
                   <Icon name="money bill alternate" />

@@ -6,9 +6,15 @@ import CartItem from "./CartItem";
 const Checkout = ({ cart, user, removeFromCart, emptyCart, updateCartQuantity }) => {
   return (
     <Container>
+    {user.userId?.typeUser === "Merchant" || user.typeUser === "Merchant" ? (
       <Header as="h1">
         Bonjour , {`${user.userId.firstName} ${user.userId.lastName}`}
       </Header>
+    ) : (
+      <Header as="h1">
+        Bonjour , {`${user.firstName} ${user.lastName}`}
+      </Header>
+    )}
       <Header as="h3">Votre Panier</Header>
       <p>
         Total : <strong>{getCartTotal(cart)}</strong> €

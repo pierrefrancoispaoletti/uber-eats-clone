@@ -156,7 +156,7 @@ const ProductModal = ({
           </Container>
           <Divider />
           <Container textAlign="center">
-            {filterFunction(productToFind?.name, o, products) ? (
+            {filterFunction(productToFind?.name, o, products) !== undefined ? (
               <Button onClick={handleAddToCart} size="large" color="black">
                 Ajouter au panier {quantity} Articles
               </Button>

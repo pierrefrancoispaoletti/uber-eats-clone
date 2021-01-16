@@ -5,7 +5,6 @@ import {
   Container,
   Divider,
   Form,
-  Header,
   Input,
 } from "semantic-ui-react";
 

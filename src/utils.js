@@ -27,6 +27,7 @@ export const filterFunction = (
   return items
     .map((item) => {
       if (
+        item?.options !== undefined && 
         Object.entries(item?.options)
           .toString()
           .localeCompare(Object.entries(optionObject).toString()) === 0 &&
@@ -35,6 +36,7 @@ export const filterFunction = (
       ) {
         return item;
       }
+
     })
     .find((e) => e !== undefined);
 };

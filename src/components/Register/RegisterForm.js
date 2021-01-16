@@ -1,7 +1,14 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Container, Divider, Form, Input } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Divider,
+  Form,
+  Input,
+  Message,
+} from "semantic-ui-react";
 import { MerchantType } from "../../datas";
 
 const RegisterForm = () => {
@@ -18,18 +25,21 @@ const RegisterForm = () => {
   const [companyName, setCompanyName] = useState("");
   const [companyType, setCompanyType] = useState("");
 
-  const [disabledButton, setDisabledButton] = useState(true);
+  const [disabledButton, setDisabledButton] = useState(false);
+  const [error, setError] = useState(false);
 
-  const checkFormErrors = (errors, userObject) => {
+  const [message, setMessage] = useState(undefined);
+  const [siretMessage, setSiretMessage] = useState({});
+
+  const checkFormErrors = (userObject) => {
     for (let key of Object.keys(userObject)) {
       if (userObject[key].length === 0) {
-        errors[key].status = true;
-        setErrors(errors);
-      } else {
-        errors[key].status = false;
-        setErrors(errors);
+        setError(true);
+        return false;
       }
     }
+    setError(false);
+    return true;
   };
   let obj = {};
   if (registerType === "merchant") {
@@ -54,55 +64,44 @@ const RegisterForm = () => {
       address: address,
     };
   }
-  const errorsArray = {
-    firstName: {
-      status: false,
-      errorMessage: {
-        firstNameMissing: "Le Nom est obligatoire",
-      },
-    },
-    lastName: {
-      status: false,
-      errorMessage: {
-        lastNameMissing:
-          "le Prénom est obligatoire et doit contenir au moins 3 lettres",
-      },
-    },
-    email: {
-      status: false,
-      errorMessage: {
-        emailMissing: "L'email est obligatoire",
-      },
-    },
-    phoneNumber: {
-      status: false,
-      errorMessage: {
-        phoneNumberMissing: "Le numéro de telephone est obligatoire",
-      },
-    },
-    address: {
-      status: false,
-      errorMessage: {
-        addressMissing: "L'adresse est obligatoire",
-      },
-    },
-    password: {
-      status: false,
-      errorMessage: {
-        passwordMissing: "Le mot de passe est obligatoire",
-      },
-    },
-  };
-  const [errors, setErrors] = useState(errorsArray);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios({
-      method: 'post',
-      url: registerType === "user" ? '/client-register' : '/merchant-register',
-      data: obj
-    })
-    .then((response) => console.log(response))
+    checkFormErrors(obj);
+    if (!error && password === confirmPassword) {
+      setDisabledButton(true);
+      axios({
+        method: "post",
+        url:
+          registerType === "user" ? "/client-register" : "/merchant-register",
+        data: obj,
+      })
+        .then((response) => setMessage(response.data))
+        .catch((e) => console.log(e))
+        .finally(() => setDisabledButton(false));
+    }
+  };
+
+  const handleChangeSiret = (userSiret) => {
+    setSiret(userSiret);
+    axios
+      .get(`https://entreprise.data.gouv.fr/api/sirene/v1/siret/${userSiret}`)
+      .then((res) => {
+        if (res.data.etablissement.siret === userSiret) {
+          setError(false);
+          setSiretMessage({
+            status: "positive",
+            message: "votre siret est valide",
+          });
+        }
+      })
+      .catch((e) => {
+        setSiretMessage({
+          status: "negative",
+          message: "votre siret ne correspond a aucune société existante",
+        });
+        setError(true);
+      });
   };
 
   return (
@@ -116,6 +115,18 @@ const RegisterForm = () => {
           <h2>{`S'inscrire en tant ${
             registerType === "user" ? "qu'Utilisateur ?" : "que Vendeur"
           } `}</h2>
+          {message?.status === 200 && (
+            <Message
+              positive={message?.status === 200}
+              content={message?.message}
+            />
+          )}
+          {message?.status === 400 && (
+            <Message
+              negative={message?.status === 400}
+              content={message?.message}
+            />
+          )}
         </Container>
         <Divider />
         <Form onSubmit={handleSubmit}>
@@ -126,7 +137,13 @@ const RegisterForm = () => {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            error={errors.firstName.status}
+            error={
+              firstName.length === 0 &&
+              error && {
+                content: "Ce champ est obligatoire",
+                pointing: "below",
+              }
+            }
           />
           <Form.Field
             control={Input}
@@ -135,7 +152,13 @@ const RegisterForm = () => {
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            error={errors.lastName.status}
+            error={
+              lastName.length === 0 &&
+              error && {
+                content: "Ce champ est obligatoire",
+                pointing: "below",
+              }
+            }
           />
           <Form.Field
             control={Input}
@@ -144,7 +167,13 @@ const RegisterForm = () => {
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            error={errors.address.status}
+            error={
+              address.length === 0 &&
+              error && {
+                content: "Ce champ est obligatoire",
+                pointing: "below",
+              }
+            }
           />
           <Form.Field
             control={Input}
@@ -153,7 +182,13 @@ const RegisterForm = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            error={errors.email.status}
+            error={
+              email.length === 0 &&
+              error && {
+                content: "Ce champ est obligatoire",
+                pointing: "below",
+              }
+            }
           />
           <Form.Field
             control={Input}
@@ -162,59 +197,112 @@ const RegisterForm = () => {
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            error={errors.phoneNumber.status}
+            error={
+              phoneNumber.length === 0 &&
+              error && {
+                content: "Ce champ est obligatoire",
+                pointing: "below",
+              }
+            }
           />
           <Form.Group grouped>
-            <Form.Field>
-              <label>Mot de passe</label>
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Confirmez votre mot de passe</label>
-              <input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </Form.Field>
+            <Form.Field
+              control={Input}
+              name="password"
+              label="Mot de passe"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={
+                password !== confirmPassword && {
+                  content: "Vos mots de passe sont differents",
+                  pointing: "below",
+                }
+              }
+            />
+            <Form.Field
+              control={Input}
+              name="confirmPassword"
+              label="Confirmez votre mot de passe"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              error={
+                password !== confirmPassword && {
+                  content: "Vos mots de passe sont differents",
+                  pointing: "below",
+                }
+              }
+            />
           </Form.Group>
           {registerType === "merchant" && (
             <>
               <Divider horizontal>Vendeur</Divider>
               <Form.Group grouped>
-                <Form.Field>
-                  <label>Nom de votre société</label>
-                  <input
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
-                </Form.Field>
-                <Form.Field>
-                  <label>Type de votre société</label>
-                  <select
-                    value={companyType}
-                    onChange={(e) => setCompanyType(e.target.value)}
-                  >
+                <Form.Field
+                  control={Input}
+                  name="companyName"
+                  label="Le nom de votre société"
+                  type="text"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  error={
+                    companyName.length === 0 &&
+                    error && {
+                      content: "Ce champs est obligatoire",
+                      pointing: "below",
+                    }
+                  }
+                />
+                <Form.Field
+                  control={Input}
+                  label="Type de votre société"
+                  name="CompanyType"
+                  value={companyType}
+                  error={
+                    companyType === "" &&
+                    error && {
+                      content:
+                        "Veuillez selectioner une option dans le menu déroulant",
+                      pointing: "below",
+                    }
+                  }
+                >
+                  <select onChange={(e) => setCompanyType(e.target.value)}>
                     <option value="">Selectionnez un type</option>
                     {MerchantType.map((type) => (
                       <option value={type.name}>{type.name}</option>
                     ))}
                   </select>
                 </Form.Field>
-                <Form.Field>
-                  <label>Siret</label>
-                  <input
-                    value={siret}
-                    onChange={(e) => setSiret(e.target.value)}
-                  />
-                </Form.Field>
+                <Form.Field
+                  control={Input}
+                  name="siret"
+                  label="Le siret de votre société"
+                  type="text"
+                  value={siret}
+                  onChange={(e) => handleChangeSiret(e.target.value)}
+                  error={
+                    siret.length === 0 &&
+                    error && {
+                      content: "Ce champs est obligatoire",
+                      pointing: "below",
+                    }
+                  }
+                />
+                {siretMessage.status === "positive" && (
+                  <Message positive content={siretMessage.message} />
+                )}
+                {siretMessage.status === "negative" && (
+                  <Message negative content={siretMessage.message} />
+                )}
               </Form.Group>
             </>
           )}
           <Divider />
           <Button
+            disabled={disabledButton}
+            loading={disabledButton}
             size="large"
             type="submit"
             content="S'inscrire"

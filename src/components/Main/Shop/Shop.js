@@ -9,9 +9,7 @@ import { uniqueKeyID } from "../../../utils";
 const Shop = ({ shops, categories, getCategories, categoryLoader }) => {
   const { id } = useParams();
   useEffect(() => {
-    if (!categories) {
-      getCategories(id);
-    }
+    getCategories(id);
   }, []);
   const findShopById = shops
     .map((shop) => {
@@ -26,7 +24,7 @@ const Shop = ({ shops, categories, getCategories, categoryLoader }) => {
       <Products
         categoryLoader={categoryLoader}
         key={uniqueKeyID()}
-        categories={categories || []}
+        categories={categories}
       />
     </div>
   );

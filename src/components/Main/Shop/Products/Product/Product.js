@@ -11,9 +11,9 @@ const Product = ({ catId }) => {
   const [currentProducts, setCurrentProducts] = useState([]);
 
   const uniqueProducts = Array.from(
-    new Set(currentProducts.map((product) => product.subCategoryId))
+    new Set(currentProducts.map((product) => product?.subCategoryId))
   ).map((id) => {
-    return currentProducts.find((product) => product.subCategoryId === id);
+    return currentProducts.find((product) => product?.subCategoryId === id);
   });
 
   useEffect(() => {

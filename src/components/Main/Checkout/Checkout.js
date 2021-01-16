@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Card, Container, Divider, Header } from "semantic-ui-react";
 import { getCartTotal, uniqueKeyID } from "../../../utils";
 import CartItem from "./CartItem";

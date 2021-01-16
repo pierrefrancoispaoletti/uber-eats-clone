@@ -9,7 +9,7 @@ const Products = ({ categoryLoader, categories }) => {
       <ul className="products__header">
         {/* la categorie sur laquelle je boucle renvois tous les produits qui correspondent a la categorie courante  */}
 
-        {categories.length > 0 && categories.map((category) => (
+        {categories?.map((category) => (
           <li key={uniqueKeyID()}>
             {!categoryLoader ? (
               <h2>{category.name}</h2>

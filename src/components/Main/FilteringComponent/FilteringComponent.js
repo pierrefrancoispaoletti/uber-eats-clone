@@ -9,7 +9,7 @@ const FilteringComponent = () => {
     <nav className="filteringcomponent__nav">
       <ul className="filteringcomponent__ul">
         {MerchantType.map((type) => (
-          <Link key={uniqueKeyID()} to={`/type/${type.name}`} >
+          <Link to={`/type/${type.name}`} >
             <li className="filteringcomponent__li">
               <div className="filteringcomponent__imgwrap">
                 <img className="filteringcomponent__img" src={type.image} alt={type.name} />

@@ -8,11 +8,11 @@ import { uniqueKeyID } from "../../../utils";
 
 const Shop = ({ shops, categories, getCategories, categoryLoader }) => {
   const { id } = useParams();
-
   useEffect(() => {
-    getCategories(id);
+    if (!categories) {
+      getCategories(id);
+    }
   }, []);
-
   const findShopById = shops
     .map((shop) => {
       if (shop._id === id) {
@@ -26,7 +26,7 @@ const Shop = ({ shops, categories, getCategories, categoryLoader }) => {
       <Products
         categoryLoader={categoryLoader}
         key={uniqueKeyID()}
-        categories={categories}
+        categories={categories || []}
       />
     </div>
   );

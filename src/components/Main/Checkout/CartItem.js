@@ -24,8 +24,9 @@ const CartItem = ({
         <Image floated="left" size="small" src={image} />
         <h4>{name}</h4>
         <Card.Meta>{unitPrice * itemQuantity} €</Card.Meta>
-        <Card.Meta>Couleur: {options?.couleur}</Card.Meta>
-        <Card.Meta>Taille: {options?.taille}</Card.Meta>
+        {Object.keys(options).map((option) =>        
+          <Card.Meta>{option}: {options[option]}</Card.Meta>
+        )}
         <Divider />
         <Container textAlign="center" fluid>
           <Button

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import { Divider } from "semantic-ui-react";
 import AddressComponent from "../../../containers/AddressComponent/AddressComponent.container";
@@ -9,6 +9,7 @@ import "./main.css";
 import Login from "../../../containers/Login/Login.container";
 import Checkout from "../../../containers/Checkout/Chekout.container";
 import Register from "../../Register/Register";
+import RegisterForm from "../../Register/RegisterForm";
 
 const Main = ({ shops, user, loading }) => {
   const location = useLocation();
@@ -23,28 +24,23 @@ const Main = ({ shops, user, loading }) => {
         </>
       )}
       <Switch>
-          <Route exact path="/">
-            {shops ? (
-              <ShopList loading={loading} shops={shops} />
-            ) : (
-              <p>désolé il n'y a pas de boutiques a afficher proche de vous</p>
-            )}
-          </Route>
+        <Route exact path="/">
+          <ShopList loading={loading} shops={shops} />
+        </Route>
         <Route path="/type/:type">
-          {shops ? (
-            <ShopList loading={loading} shops={shops} />
-          ) : (
-            <p>désolé il n'y a pas de boutiques a afficher proche de vous</p>
-          )}
+          <ShopList loading={loading} shops={shops} />
         </Route>
         <Route path="/shop/:shop/:id">
           {user ? <Shop /> : <Redirect to="/login" />}
         </Route>
         <Route path="/login">{!user ? <Login /> : <Redirect to="/" />}</Route>
-        <Route path="/register">
+        <Route exact path="/register/">
           {!user ? <Register /> : <Redirect to="/" />}
         </Route>
         <Route path="/cart">{user ? <Checkout /> : <Redirect to="/" />}</Route>
+        <Route path="/register/:registerType">
+          <RegisterForm />
+        </Route>
       </Switch>
     </div>
   );

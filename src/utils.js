@@ -19,14 +19,19 @@ export const getCartTotal = (cart) =>
     0
   );
 
-export const filterFunction = (objectName, optionObject = {}, items = []) => {
+export const filterFunction = (
+  objectName = "",
+  optionObject = {},
+  items = []
+) => {
   return items
     .map((item) => {
       if (
-        Object.entries(item.options)
+        Object.entries(item?.options)
           .toString()
           .localeCompare(Object.entries(optionObject).toString()) === 0 &&
-        item.status === true && item.name === objectName
+        item.status === true &&
+        item.name === objectName
       ) {
         return item;
       }

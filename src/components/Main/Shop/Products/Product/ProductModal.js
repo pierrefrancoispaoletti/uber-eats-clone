@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
@@ -10,18 +11,22 @@ import {
 import { filterFunction } from "../../../../../utils";
 
 const ProductModal = ({
-  subCategories,
   isOpenProductModal,
   setIsOpenProductModal,
+  catId,
   products,
   productId,
   addToCart,
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [o, setO] = useState(undefined);
+  const [subCategories, setSubCategories] = useState([]);
 
-  //filtre les sous categories de produit
-  //pour trouver celle a laquelle le produit est rataché
+  useEffect(() => {
+    axios
+      .get(`/products/subcategory/category/${catId}`)
+      .then((response) => setSubCategories(response.data.data));
+  }, []);
 
   const filteredSubCategories = (productSubId) => {
     return subCategories
@@ -30,16 +35,15 @@ const ProductModal = ({
           return JSON.parse(subCategory.options);
         }
       })
-      .find((p) => p !== undefined);
+      .find((s) => s !== undefined);
   };
-  // trouve de produit dans la liste dont l'id correspond
   const productToFind = products
     ?.map((product) => {
       if (product?._id === productId) {
         return product;
       }
     })
-    .find((e) => e !== undefined);
+    .find((p) => p !== undefined);
 
   const options = filteredSubCategories(productToFind?.subCategoryId);
 
@@ -54,7 +58,7 @@ const ProductModal = ({
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    if (item?.quantity > 0) {
+    if (item?.quantity > 0 && options) {
       addToCart(item);
       setQuantity(1);
     }
@@ -73,9 +77,6 @@ const ProductModal = ({
       });
     setO(subCatObject);
   };
-  // console.log(o);
-  // console.log(products);
-  // console.log(filterFunction(productToFind?.name, o, products));
   return (
     <Modal
       centered
@@ -96,6 +97,16 @@ const ProductModal = ({
           <p>{productToFind?.description}</p>
         </Modal.Description>
       </Container>
+      <Container textAlign="center">
+        <Modal.Description>
+          <p>
+            Prix de l'article{" "}
+            {Number(filterFunction(productToFind?.name, o, products)?.price) ||
+              Number(productToFind?.price)}{" "}
+            €
+          </p>
+        </Modal.Description>
+      </Container>
       <Divider />
       <Modal.Content>
         <Form>
@@ -104,9 +115,11 @@ const ProductModal = ({
               <>
                 <Form.Field>{option[0]}</Form.Field>
                 <select id={option[0]} defaultValue={0} onChange={handleChange}>
-                  <option value=""></option>
+                  <option value="">Veuillez faire votre choix</option>
                   {option[1].map((value) => (
-                    <option value={value}>{value}</option>
+                    <option key={value} value={value}>
+                      {value}
+                    </option>
                   ))}
                 </select>
               </>
@@ -136,19 +149,22 @@ const ProductModal = ({
           <Container textAlign="center">
             <h2>Total des articles</h2>
             <p>
-              {Number(productToFind?.price) * quantity} <small> € </small>{" "}
+              {Number(filterFunction(productToFind?.name, o, products)?.price) *
+                quantity || productToFind?.price * quantity}{" "}
+              <small> € </small>{" "}
             </p>
           </Container>
           <Divider />
           <Container textAlign="center">
-            <Button
-              disabled={!filterFunction(productToFind?.name, o, products)}
-              onClick={handleAddToCart}
-              size="large"
-              color="black"
-            >
-              Ajouter au panier {quantity} Articles
-            </Button>
+            {filterFunction(productToFind?.name, o, products) ? (
+              <Button onClick={handleAddToCart} size="large" color="black">
+                Ajouter au panier {quantity} Articles
+              </Button>
+            ) : (
+              <Button disabled size="large" color="red">
+                Ce produit n'est pas disponible actuelement
+              </Button>
+            )}
           </Container>
         </Form>
       </Modal.Content>

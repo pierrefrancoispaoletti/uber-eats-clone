@@ -1,17 +1,16 @@
 import { connect } from "react-redux";
 import {
-    getProducts,
-    getSubCategories
+    setProductLoading
 } from "../../actions/kants";
 import Product from "../../components/Main/Shop/Products/Product/Product";
 
 const mapStateToProps = (state) => ({
     products: state.shop.products,
     productLoader: state.shop.productLoader,
+    subCategories: state.shop.subCategories
 });
 const mapDispatchToProps = {
-    getProducts,
-    getSubCategories
+    setProductLoading,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

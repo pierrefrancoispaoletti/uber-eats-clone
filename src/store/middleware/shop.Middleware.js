@@ -11,7 +11,6 @@ import {
 import Axios from "axios";
 
 const ShopMiddleware = (store) => (next) => (action) => {
-  const { products } = store.getState();
   switch (action.type) {
     case GET_CATEGORIES: {
       store.dispatch(setCatLoading(true));
@@ -25,7 +24,9 @@ const ShopMiddleware = (store) => (next) => (action) => {
         .catch((error) => {
           console.log(error);
         })
-        .finally(() => store.dispatch(setCatLoading(false)));
+        .finally(() => {
+          store.dispatch(setCatLoading(false));
+        });
       next(action);
       break;
     }
@@ -36,7 +37,7 @@ const ShopMiddleware = (store) => (next) => (action) => {
         url: `/products/category/${action.categoryId}`,
       })
         .then((response) => {
-         store.dispatch(setProducts(response.data.data))
+          store.dispatch(setProducts(response.data.data));
         })
         .catch((error) => {
           console.log(error);
@@ -46,17 +47,16 @@ const ShopMiddleware = (store) => (next) => (action) => {
       break;
     }
     case GET_SUBCATEGORIES: {
-        Axios({
-          method: "get",
-          url: `/products/subcategory/category/${action.categoryId}`,
-        })
-          .then((response) => {
-              store.dispatch(setSubCategories(response.data.data))
-          })
-        next(action);
-        break;
-      }
-    
+      Axios({
+        method: "get",
+        url: `/products/subcategory/category/${action.categoryId}`,
+      }).then((response) => {
+        store.dispatch(setSubCategories(response.data.data));
+      });
+      next(action);
+      break;
+    }
+
     default:
       next(action);
   }

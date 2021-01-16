@@ -7,7 +7,7 @@ import {
 } from "../../actions/kants";
 
 const initialState = {
-  categories: [],
+  categories: undefined,
   products: [],
   subCategories: [],
   categoryLoader: false,
@@ -41,11 +41,7 @@ function reducer(state = initialState, action = {}) {
         ...state,
         productLoader: action.loading,
       };
-      case SET_SUBCATEGORIES: 
-      return {
-          ...state,
-          subCategories: action.subCategories
-      }
+
     default:
       return state;
   }

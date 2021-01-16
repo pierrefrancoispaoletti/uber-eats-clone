@@ -43,7 +43,7 @@ const ShopList = ({ shops, loading }) => {
             )
           ) : (
             <>
-              <Placeholder fluid fluid style={{ height: 300 }}>
+              <Placeholder fluid style={{ height: 300 }}>
                 <Placeholder.Image rectangular />
               </Placeholder>
               <Placeholder>

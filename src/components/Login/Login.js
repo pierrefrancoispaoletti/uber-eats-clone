@@ -27,7 +27,7 @@ const Login = ({ user, login }) => {
     history.replace("/");
   };
   return (
-    <Container textAlign="center">
+    <Container textAlign="center" text>
       <Divider />
       <Container>
         <h2>Connexion</h2>

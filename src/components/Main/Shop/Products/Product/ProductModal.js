@@ -19,7 +19,7 @@ const ProductModal = ({
   addToCart,
 }) => {
   const [quantity, setQuantity] = useState(1);
-  const [o, setO] = useState(undefined);
+  const [o, setO] = useState({ options: ["sans options"] });
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const ProductModal = ({
       onOpen={() => setIsOpenProductModal(true)}
       onClose={() => {
         setIsOpenProductModal(false);
-        setO(undefined);
+        setO({ options: ["sans options"] });
       }}
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>
@@ -111,21 +111,27 @@ const ProductModal = ({
       <Modal.Content>
         <Form>
           {options &&
-            Object.entries(options).map((option) => (
-              <>
-                <Form.Field>{option[0]}</Form.Field>
-                <select id={option[0]} defaultValue={0} onChange={handleChange}>
-                  <option value="">Veuillez faire votre choix</option>
-                  {option[1].map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-              </>
-            ))}
-
-          <Divider />
+            Object.entries(options).map(
+              (option) =>
+                option[0] !== "options" && (
+                  <>
+                    <Form.Field>{option[0]}</Form.Field>
+                    <select
+                      id={option[0]}
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      <option value="">Veuillez faire votre choix</option>
+                      {option[1].map((value) => (
+                        <option key={value} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                    <Divider />
+                  </>
+                )
+            )}
           <Container textAlign="center">
             <Button
               onClick={(e) =>

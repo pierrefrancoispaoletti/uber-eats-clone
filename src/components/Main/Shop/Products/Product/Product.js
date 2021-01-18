@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Loader, Placeholder } from "semantic-ui-react";
+import { Loader } from "semantic-ui-react";
 import ProductModal from "../../../../../containers/ProductModal/ProductModal.container";
 import { uniqueKeyID } from "../../../../../utils";
 

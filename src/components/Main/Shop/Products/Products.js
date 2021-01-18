@@ -1,9 +1,28 @@
 import React from "react";
-import { Placeholder } from "semantic-ui-react";
+import { Button, Container, Placeholder } from "semantic-ui-react";
 import { uniqueKeyID } from "../../../../utils";
 import Product from "../../../../containers/Product/Product.container";
+import { useLocation } from "react-router-dom";
 
-const Products = ({ categoryLoader, categories }) => {
+const Products = ({
+  categoryLoader,
+  categories,
+  setCategoryId,
+  setOpenEditCategoryModal,
+  setCategoryName,
+  setOpenDeleteCategoryModal,
+}) => {
+  const location = useLocation();
+  const handleClickOnEditButton = (catId, catName) => {
+    setCategoryId(catId);
+    setCategoryName(catName);
+    setOpenEditCategoryModal(true);
+  };
+  const handleClickOnDeleteModal = (catId, catName) => {
+    setCategoryId(catId);
+    setCategoryName(catName);
+    setOpenDeleteCategoryModal(true);
+  };
   return (
     <div className="products">
       <ul className="products__header">
@@ -12,7 +31,27 @@ const Products = ({ categoryLoader, categories }) => {
         {categories?.map((category) => (
           <li key={uniqueKeyID()}>
             {!categoryLoader ? (
-              <h2>{category.name}</h2>
+              <Container text>
+                <h2>{category?.name}</h2>
+                {location.pathname === "/account/store-management" && (
+                  <>
+                    <Button
+                      color="green"
+                      circular
+                      icon={{ name: "edit" }}
+                      onClick={(e) =>
+                        handleClickOnEditButton(category?._id, category?.name)
+                      }
+                    />
+                    <Button
+                    onClick={(e) => handleClickOnDeleteModal(category?._id, category?.name)}
+                      color="red"
+                      circular
+                      icon={{ name: "trash alternate" }}
+                    />
+                  </>
+                )}
+              </Container>
             ) : (
               <Placeholder>
                 <Placeholder.Paragraph>

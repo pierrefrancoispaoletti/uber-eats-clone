@@ -48,15 +48,15 @@ const HeaderMenu = ({ setVisible, visible, children, user }) => {
                 Mon Panier
               </Menu.Item>
             </Link>
-            <Link to="/account">
+            <Link to="/account/user-infos">
               <Menu.Item active={location.pathname === "/account"}>
                 <Icon name="lock" />
                 Mon Compte
               </Menu.Item>
             </Link>
             {user.userId?.typeUser === "Merchant" && (
-              <Link to="/store-manager">
-                <Menu.Item active={location.pathname === "/store-manager"}>
+              <Link to="/account/store-management">
+                <Menu.Item active={location.pathname === "/account/store-management"}>
                   <Icon name="money bill alternate" />
                   Gérer ma boutique
                 </Menu.Item>

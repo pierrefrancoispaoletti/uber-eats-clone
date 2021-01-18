@@ -10,6 +10,7 @@ import Login from "../../../containers/Login/Login.container";
 import Checkout from "../../../containers/Checkout/Chekout.container";
 import Register from "../../Register/Register";
 import RegisterForm from "../../Register/RegisterForm";
+import Account from "../../../containers/Account/Account";
 
 const Main = ({ shops, user, loading }) => {
   const location = useLocation();
@@ -39,7 +40,10 @@ const Main = ({ shops, user, loading }) => {
         </Route>
         <Route path="/cart">{user ? <Checkout /> : <Redirect to="/" />}</Route>
         <Route path="/register/:registerType">
-          <RegisterForm />
+        {!user ? <RegisterForm />: <Redirect to="/" />}
+        </Route>
+        <Route path="/account">
+        {user ? <Account />: <Redirect to="/login" />}
         </Route>
       </Switch>
     </div>

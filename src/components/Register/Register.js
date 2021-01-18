@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Divider, Form, Header } from "semantic-ui-react";
+import { Button, Container, Divider } from "semantic-ui-react";
 
 const Register = () => {
   return (

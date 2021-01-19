@@ -14,6 +14,8 @@ const Shop = ({
   merchantId,
   setCategoryId,
   setCategoryName,
+  setOpenAddProductModal,
+  setOpenAddCategoryModal,
   setOpenEditCategoryModal,
   setOpenDeleteCategoryModal
 }) => {
@@ -42,6 +44,8 @@ const Shop = ({
         categories={categories}
         setCategoryId={setCategoryId}
         setCategoryName={setCategoryName}
+        setOpenAddProductModal={setOpenAddProductModal}
+        setOpenAddCategoryModal={setOpenAddCategoryModal}
         setOpenEditCategoryModal={setOpenEditCategoryModal}
         setOpenDeleteCategoryModal={setOpenDeleteCategoryModal}
       />

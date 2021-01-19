@@ -7,6 +7,7 @@ const AddCategoryModal = ({
   setOpenAddCategoryModal,
   merchantId,
   setMessage,
+  getCategories,
 }) => {
   const [value, setValue] = useState("");
   const newCategory = {
@@ -20,6 +21,7 @@ const AddCategoryModal = ({
       .then((response) => setMessage(response.data))
       .then(() => setOpenAddCategoryModal(false))
       .then(() => setValue(""))
+      .then(() => getCategories(merchantId))
   };
   return (
     <Modal

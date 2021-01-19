@@ -6,18 +6,22 @@ const DeleteCategoryModal = ({
   openDeleteCategoryModal,
   setOpenDeleteCategoryModal,
   categoryName,
+  getCategories,
   merchantId,
   categoryId,
-  setMessage
+  setMessage,
 }) => {
-    const categoryToDelete = {
-        categoryId,
-        merchantId
-    }
-    const handleDeleteCategory = () => {
-        axios.post("/category/delete", categoryToDelete ).then((response) => setMessage(response.data))
-        .then(() => setOpenDeleteCategoryModal(false))
-    }
+  const categoryToDelete = {
+    categoryId,
+    merchantId,
+  };
+  const handleDeleteCategory = () => {
+    axios
+      .post("/category/delete", categoryToDelete)
+      .then((response) => setMessage(response.data))
+      .then(() => setOpenDeleteCategoryModal(false))
+      .then(() => getCategories(merchantId));
+  };
   return (
     <Modal
       open={openDeleteCategoryModal}
@@ -32,7 +36,7 @@ const DeleteCategoryModal = ({
       </Modal.Content>
       <Modal.Actions>
         <Button
-        onClick={handleDeleteCategory}
+          onClick={handleDeleteCategory}
           color="red"
           content="Oui, je supprime cette catégorie et les produits associés"
         />

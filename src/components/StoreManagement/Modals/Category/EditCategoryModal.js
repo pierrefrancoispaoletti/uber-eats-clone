@@ -5,10 +5,12 @@ import { Button, Container, Form, Input, Modal } from "semantic-ui-react";
 const EditCategoryModal = ({
   merchantId,
   setMessage,
+  getCategories,
   categoryName,
   categoryId,
   openEditCategoryModal,
   setOpenEditCategoryModal,
+
 }) => {
 
   const [value, setValue] = useState(categoryName);
@@ -22,7 +24,8 @@ const EditCategoryModal = ({
     axios
       .post("/category/update", updatedCategory)
       .then((response) => setMessage(response.data))
-      .then(() => setOpenEditCategoryModal(false));
+      .then(() => setOpenEditCategoryModal(false))
+      .then(() => getCategories(merchantId));
   };
   return (
     <Modal

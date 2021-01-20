@@ -11,6 +11,7 @@ import {
 } from "semantic-ui-react";
 
 const AddProductModal = ({
+  categoryName,
   getProducts,
   setMessage,
   openAddProductModal,
@@ -20,11 +21,12 @@ const AddProductModal = ({
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [productCategory, setProductCategory] = useState("");
+  const [productCategory, setProductCategory] = useState();
   const [withOptions, setWithOptions] = useState(false);
   const [optionCounter, setOptionCounter] = useState(0);
   const [optionValue, setOptionValue] = useState({});
-  const [ignitor, setIgnitor] = useState('');
+  const [productImage, setProductImage] = useState(null);
+  const [ignitor, setIgnitor] = useState("");
   const [error, setError] = useState(false);
 
   const checkFormErrors = (userObject) => {
@@ -54,7 +56,7 @@ const AddProductModal = ({
             control={Input}
             label={`Valeurs , séparées par des virgules`}
             placeholder="ex: bleu,blanc,rouge"
-            onChange={e => setIgnitor(e.target.value)}
+            onChange={(e) => setIgnitor(e.target.value)}
           />
         </Form.Group>
       );
@@ -81,35 +83,40 @@ const AddProductModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (withOptions.value === false) {
-      productObject = {
-        name: productName,
-        price: productPrice,
-        description: productDescription,
-        categoryId: productCategory,
-        options: `{"options":["sans options"]}`,
-        status: true,
-      };
+    let data = new FormData();
+
+    data.append("name", productName);
+    data.append("description", productDescription);
+    data.append("price", productPrice);
+    data.append("status", true);
+    data.append("image", productImage);
+    data.append("categoryId", productCategory);
+
+    if (!withOptions.value) {
+      data.append("options", `{"options": ["sans options"]}`);
     } else {
-      productObject = {
-        name: productName,
-        price: productPrice,
-        description: productDescription,
-        categoryId: productCategory,
-        options: JSON.stringify(optionValue),
-        status: true,
-      };
+      data.append("options", JSON.stringify(optionValue));
     }
+
+    let config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
     axios
-      .post("/product/create", productObject)
+      .post("/product/create", data, config)
       .then((response) => setMessage(response.data))
       .then(() => getProducts(productCategory))
+      .then(() => setOpenAddProductModal(false));
   };
   useEffect(() => {
     setOptionValue(optionObjectGenerator());
   }, [ignitor]);
 
-  console.log(optionObjectGenerator())
+  useEffect(() => {
+    getProducts(productCategory);
+  }, [openAddProductModal]);
+
   return (
     <Modal
       open={openAddProductModal}
@@ -141,6 +148,13 @@ const AddProductModal = ({
               icon="euro"
               type="number"
               label="Prix du produit"
+            />
+            <Form.Field
+              control={Input}
+              files={productImage}
+              onChange={(e) => setProductImage(e.target.files[0])}
+              type="file"
+              label="Image du produit"
             />
             <Form.Field control={Input} label="Catégorie du produit">
               <select

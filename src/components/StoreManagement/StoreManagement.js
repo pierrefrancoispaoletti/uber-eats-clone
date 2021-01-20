@@ -73,6 +73,7 @@ const StoreManagement = ({ user, getMerchants, getCategories, categories, getPro
         getCategories={getCategories}
       />
       <AddProductModal
+        categoryName={categoryName}
         getProducts={getProducts}
         setMessage={setMessage}
         categories={categories}

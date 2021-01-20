@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   Button,
   Container,
@@ -9,6 +10,7 @@ import {
   Modal,
 } from "semantic-ui-react";
 import { filterFunction } from "../../../../../utils";
+import EditProductModal from "../../../../StoreManagement/Modals/Products/EditProductModal";
 
 const ProductModal = ({
   isOpenProductModal,
@@ -17,10 +19,12 @@ const ProductModal = ({
   products,
   productId,
   addToCart,
+  getProducts,
 }) => {
   const [quantity, setQuantity] = useState(1);
   const [o, setO] = useState({ options: ["sans options"] });
   const [subCategories, setSubCategories] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     axios
@@ -77,7 +81,16 @@ const ProductModal = ({
       });
     setO(subCatObject);
   };
-  return (
+  return location.pathname === "/account/store-management" &&
+    productToFind !== undefined ? (
+    <EditProductModal
+      catId={catId}
+      getProducts={getProducts}
+      productToFind={productToFind}
+      isOpenProductModal={isOpenProductModal}
+      setIsOpenProductModal={setIsOpenProductModal}
+    />
+  ) : (
     <Modal
       centered
       closeIcon

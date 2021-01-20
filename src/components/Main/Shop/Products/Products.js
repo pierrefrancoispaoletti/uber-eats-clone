@@ -25,6 +25,11 @@ const Products = ({
     setCategoryName(catName);
     setOpenDeleteCategoryModal(true);
   };
+
+  const handleClickOnAddProductModal = (catName) => {
+    setCategoryName(catName);
+    setOpenAddProductModal(true);
+  };
   return (
     <div className="products">
       {location.pathname === "/account/store-management" && (
@@ -73,9 +78,9 @@ const Products = ({
                       compact
                       icon="plus"
                       content={`Ajouter un produit dans ${category.name}`}
-                      onClick={e => setOpenAddProductModal(true)}                      
+                      onClick={(e) => handleClickOnAddProductModal(category.name)}
                     />
-                    <Divider hidden/>
+                    <Divider hidden />
                   </>
                 )}
               </>

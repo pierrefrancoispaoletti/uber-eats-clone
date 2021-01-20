@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import {
-    addToCart
+    addToCart,
+    getProducts
 } from "../../actions/kants";
 import ProductModal from "../../components/Main/Shop/Products/Product/ProductModal";
 
@@ -10,6 +11,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = {
     addToCart,
+    getProducts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductModal);

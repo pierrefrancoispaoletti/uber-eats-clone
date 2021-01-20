@@ -33,7 +33,8 @@ const RegisterForm = ({ user }) => {
   );
   const [phoneNumber, setPhoneNumber] = useState(
     (user?.phoneNumber !== undefined && decryptPhoneNumber(user.phoneNumber)) ||
-      (user?.userId.phoneNumber !== undefined && decryptPhoneNumber(user.userId.phoneNumber)) ||
+      (user?.userId.phoneNumber !== undefined &&
+        decryptPhoneNumber(user.userId.phoneNumber)) ||
       ""
   );
   const [email, setEmail] = useState(
@@ -132,7 +133,6 @@ const RegisterForm = ({ user }) => {
         setError(true);
       });
   };
-  console.log(location);
   return (
     <>
       {location.pathname !== "/account/user-infos" && (

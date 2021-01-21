@@ -1,6 +1,13 @@
 import React from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
-import { Container, Divider, Menu } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Divider,
+  Header,
+  Icon,
+  Menu,
+} from "semantic-ui-react";
 import Orders from "../Orders/Orders";
 import RegisterForm from "../Register/RegisterForm";
 import Sells from "../Sells/Sells";
@@ -37,9 +44,30 @@ const Account = ({ user }) => {
                 Mes Ventes
               </Menu.Item>
             </Link>
+            <Link to="/account/subscribe">
+              <Menu.Item active={location.pathname === "/account/subscribe"}>
+                <Icon name="warning sign" size="large" color="red" /> Mon
+                Abonnement
+              </Menu.Item>
+            </Link>
           </>
         )}
       </Menu>
+      <Divider />
+      <Container text textAlign="center">
+        <Header as="h2">
+          {" "}
+          <Icon name="warning sign" size="huge" color="red" /> Important
+        </Header>
+        Afin de pouvoir encaisser vos paiements et de publier vos produits vous
+        devez fournir des piéces justificatives a stripe.
+      </Container>
+      <Divider hidden />
+      <Button
+        color="blue"
+        circular
+        content="Renseigner mes informations stripe"
+      />
       <Divider />
       <Container text textAlign="center">
         <h2>
@@ -51,6 +79,8 @@ const Account = ({ user }) => {
             ? "Gérer ma Boutique"
             : location.pathname === "/account/sells"
             ? "Mes Ventes"
+            : location.pathname === "/account/subscribe"
+            ? "Mon Abonnement"
             : ""}
         </h2>
         <Divider />

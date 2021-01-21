@@ -18,9 +18,9 @@ const ShopImage = ({ name, image }) => {
         <div className="shop__infos">
           <div className="title">
             <h1>{name}</h1>
-            <div className="infos">
+            {/* <div className="infos">
               peut contenir diverses infos , me dire si il faut le coder
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

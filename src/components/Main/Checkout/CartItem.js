@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Image } from "semantic-ui-react";
 

@@ -11,7 +11,7 @@ import Checkout from "../../../containers/Checkout/Chekout.container";
 import Register from "../../Register/Register";
 import RegisterForm from "../../Register/RegisterForm";
 import Account from "../../../containers/Account/Account";
-import Payment from "../../Payment/Payment";
+import Payment from "../../../containers/Payment/Payment.container";
 
 const Main = ({ shops, user, loading }) => {
   const location = useLocation();

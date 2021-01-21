@@ -13,6 +13,7 @@ import { filterFunction } from "../../../../../utils";
 import EditProductModal from "../../../../StoreManagement/Modals/Products/EditProductModal";
 
 const ProductModal = ({
+  shop,
   isOpenProductModal,
   setIsOpenProductModal,
   catId,
@@ -27,9 +28,11 @@ const ProductModal = ({
   const location = useLocation();
 
   useEffect(() => {
-    axios
-      .get(`/products/subcategory/category/${catId}`)
-      .then((response) => setSubCategories(response.data.data));
+    if (!subCategories) {
+      axios
+        .get(`/products/subcategory/category/${catId}`)
+        .then((response) => setSubCategories(response.data.data));
+    }
   }, []);
 
   const filteredSubCategories = (productSubId) => {
@@ -58,6 +61,7 @@ const ProductModal = ({
     quantity: quantity,
     unitPrice: Number(filterFunction(productToFind?.name, o, products)?.price),
     options: filterFunction(productToFind?.name, o, products)?.options,
+    shop,
   };
 
   const handleAddToCart = (e) => {
@@ -99,6 +103,7 @@ const ProductModal = ({
       onClose={() => {
         setIsOpenProductModal(false);
         setO({ options: ["sans options"] });
+        setSubCategories([])
       }}
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>

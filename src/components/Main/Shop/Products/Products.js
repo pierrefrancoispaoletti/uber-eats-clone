@@ -5,6 +5,7 @@ import Product from "../../../../containers/Product/Product.container";
 import { useLocation } from "react-router-dom";
 
 const Products = ({
+  shop,
   categoryLoader,
   categories,
   setCategoryId,
@@ -26,8 +27,8 @@ const Products = ({
     setOpenDeleteCategoryModal(true);
   };
 
-  const handleClickOnAddProductModal = (catName) => {
-    setCategoryName(catName);
+  const handleClickOnAddProductModal = (catId) => {
+    setCategoryId(catId);
     setOpenAddProductModal(true);
   };
   return (
@@ -78,7 +79,7 @@ const Products = ({
                       compact
                       icon="plus"
                       content={`Ajouter un produit dans ${category.name}`}
-                      onClick={(e) => handleClickOnAddProductModal(category.name)}
+                      onClick={(e) => handleClickOnAddProductModal(category._id)}
                     />
                     <Divider hidden />
                   </>
@@ -93,7 +94,7 @@ const Products = ({
             )}
             <ul className="products__list">
               <li>
-                <Product key={uniqueKeyID()} catId={category._id} />
+                <Product key={uniqueKeyID()} catId={category._id} shop={shop} />
               </li>
             </ul>
           </li>

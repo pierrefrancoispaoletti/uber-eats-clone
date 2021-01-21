@@ -39,6 +39,7 @@ const Shop = ({
     <div className="shop">
       <Top {...findShopById} />
       <Products
+        shop={findShopById}
         categoryLoader={categoryLoader}
         key={uniqueKeyID()}
         categories={categories}

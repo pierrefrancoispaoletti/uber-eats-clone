@@ -34,7 +34,7 @@ const Checkout = ({
         />
       </Link>
       <Divider />
-      <Card.Group stackable itemsPerRow={1}>
+      <Card.Group stackable itemsPerRow={3}>
         {cart.map((cartItem) => (
           <CartItem
             key={uniqueKeyID()}

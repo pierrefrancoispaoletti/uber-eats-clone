@@ -11,17 +11,16 @@ import {
 } from "semantic-ui-react";
 
 const AddProductModal = ({
-  categoryName,
+  categoryId,
   getProducts,
   setMessage,
   openAddProductModal,
   setOpenAddProductModal,
-  categories,
 }) => {
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
-  const [productCategory, setProductCategory] = useState();
+  const [productCategory, setProductCategory] = useState("");
   const [withOptions, setWithOptions] = useState(false);
   const [optionCounter, setOptionCounter] = useState(0);
   const [optionValue, setOptionValue] = useState({});
@@ -29,6 +28,12 @@ const AddProductModal = ({
   const [ignitor, setIgnitor] = useState("");
   const [error, setError] = useState(false);
 
+  useEffect(() => {    
+    setProductCategory(categoryId)
+  }, [categoryId]);
+
+  
+  console.log(productCategory)
   const checkFormErrors = (userObject) => {
     for (let key of Object.keys(userObject)) {
       if (userObject[key].length === 0) {
@@ -78,8 +83,6 @@ const AddProductModal = ({
   };
 
   const handleChangeRadio = (e, { value }) => setWithOptions({ value });
-
-  let productObject = {};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -156,17 +159,6 @@ const AddProductModal = ({
               type="file"
               label="Image du produit"
             />
-            <Form.Field control={Input} label="Catégorie du produit">
-              <select
-                value={productCategory}
-                onChange={(e) => setProductCategory(e.target.value)}
-              >
-                <option value="">Choisissez une categorie</option>
-                {categories?.map((category) => (
-                  <option value={category._id}>{category.name} </option>
-                ))}
-              </select>
-            </Form.Field>
             <Form.Group>
               <Form.Field>Options ?</Form.Field>
               <Form.Field>

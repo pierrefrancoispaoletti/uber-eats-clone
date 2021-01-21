@@ -54,6 +54,7 @@ const RegisterForm = ({ user }) => {
   const [companyType, setCompanyType] = useState(
     (user?.type !== undefined && user.type) || ""
   );
+  const [companyImage, setCompanyImage] = useState(null);
 
   const [disabledButton, setDisabledButton] = useState(false);
   const [error, setError] = useState(false);
@@ -71,40 +72,45 @@ const RegisterForm = ({ user }) => {
     setError(false);
     return true;
   };
-  let obj = {};
+  let data = new FormData();
   if (registerType === "merchant") {
-    obj = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phoneNumber: phoneNumber,
-      address: address,
-      siret: siret,
-      companyName: companyName,
-      companyType: companyType,
-    };
+    data.append("firstName", firstName)
+    data.append("lastName", lastName)
+    data.append("email", email)
+    data.append("password", password)
+    data.append("phoneNumber", phoneNumber)
+    data.append("address", address)
+    data.append("siret", siret)
+    data.append("companyName", companyName)
+    data.append("companyType", companyType)
+    data.append("image", companyImage)
+    
   } else {
-    obj = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      phoneNumber: phoneNumber,
-      address: address,
-    };
+    data.append("firstName", firstName)
+    data.append("lastName", lastName)
+    data.append("email", email)
+    data.append("password", password)
+    data.append("phoneNumber", phoneNumber)
+    data.append("address", address)
   }
+
+  let config = {
+    headers: {
+      "content-type": "multipart/form-data",
+    },
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkFormErrors(obj);
-    if (!error && password === confirmPassword) {
+    checkFormErrors(data);
+    if (!error && password === confirmPassword && location.pathname !=="/account/user-infos" ) {
       setDisabledButton(true);
       axios({
         method: "post",
         url:
           registerType === "user" ? "/client-register" : "/merchant-register",
-        data: obj,
+        data: data,
+        config: config
       })
         .then((response) => setMessage(response.data))
         .catch((e) => console.log(e))
@@ -289,6 +295,14 @@ const RegisterForm = ({ user }) => {
                       pointing: "below",
                     }
                   }
+                />
+                <Form.Field
+                  control={Input}
+                  name="companyImage"
+                  label="une image de votre société"
+                  type="file"
+                  files={companyImage}
+                  onChange={(e) => setCompanyImage(e.target.files[0])}
                 />
                 <Form.Field
                   control={Input}

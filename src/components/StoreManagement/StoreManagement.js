@@ -16,7 +16,7 @@ const StoreManagement = ({ user, getMerchants, getCategories, categories, getPro
   const [categoryId, setCategoryId] = useState("");
   const [categoryName, setCategoryName] = useState("");
   useEffect(() => {
-    getMerchants(user.address.slice(1));
+    getMerchants(user.address);
   }, []);
   return (
     <>
@@ -73,7 +73,7 @@ const StoreManagement = ({ user, getMerchants, getCategories, categories, getPro
         getCategories={getCategories}
       />
       <AddProductModal
-        categoryName={categoryName}
+        categoryId={categoryId}
         getProducts={getProducts}
         setMessage={setMessage}
         categories={categories}

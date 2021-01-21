@@ -1,25 +1,38 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Container, Divider, Header } from "semantic-ui-react";
 import { getCartTotal, uniqueKeyID } from "../../../utils";
 import CartItem from "./CartItem";
 
-const Checkout = ({ cart, user, removeFromCart, emptyCart, updateCartQuantity }) => {
+const Checkout = ({
+  cart,
+  user,
+  removeFromCart,
+  emptyCart,
+  updateCartQuantity,
+}) => {
   return (
     <Container>
-    {user.userId?.typeUser === "Merchant" || user.typeUser === "Merchant" ? (
-      <Header as="h1">
-        Bonjour , {`${user.userId.firstName} ${user.userId.lastName}`}
-      </Header>
-    ) : (
-      <Header as="h1">
-        Bonjour , {`${user.firstName} ${user.lastName}`}
-      </Header>
-    )}
+      {user.userId?.typeUser === "Merchant" || user.typeUser === "Merchant" ? (
+        <Header as="h1">
+          Bonjour , {`${user.userId.firstName} ${user.userId.lastName}`}
+        </Header>
+      ) : (
+        <Header as="h1">
+          Bonjour , {`${user.firstName} ${user.lastName}`}
+        </Header>
+      )}
       <Header as="h3">Votre Panier</Header>
       <p>
         Total : <strong>{getCartTotal(cart)}</strong> €
       </p>
-      <Button onClick={e => console.log(getCartTotal(cart))} color="green" content="Payer" />
+      <Link to="/payment">
+        <Button
+          onClick={(e) => console.log(getCartTotal(cart))}
+          color="green"
+          content="Payer"
+        />
+      </Link>
       <Divider />
       <Card.Group stackable itemsPerRow={1}>
         {cart.map((cartItem) => (

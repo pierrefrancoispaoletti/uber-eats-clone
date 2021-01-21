@@ -1,6 +1,19 @@
-ajouter les loaders sur les requettes api
-mettre en place le register
-mettre en place la page marchands 
-mettre en place la page paiement
-arriver a comprendre les sub categories et les produits
-pourquoi la barre de menu ne fonctione plus des qu'on a ajouté un article au panier
+mettre en place les erreurs sur les formulaires d'ajout de produit et de categories
+mettre en place la page de paiement (ENFIN !)
+mettre en place la liste des produits sur la page store management (retirer le uniqueProduct) // ok
+afficher dans les produits ou les options disponibles , ou l'option du produit // ok
+mettre en place la suppression / edition de produit // ok
+rajouter un bouton style toggle pour marquer le produit comme en stock ou pas //ok
+
+penser a mettre en place l'edition d'utilisateur
+
+probleme coté serveur a l'update d'un produit l 351 du a l'operateur coalescent
+
+// Sorted data by truthly value
+    for (const [key, value] of Object.entries(data)) {
+        if (!!value) {
+            sortedData[key] = value
+        }
+    }
+
+allez mon coco on touche au but

@@ -16,11 +16,13 @@ const Account = ({ user }) => {
             Mes infos
           </Menu.Item>
         </Link>
-        <Link to="/account/orders">
-          <Menu.Item active={location.pathname === "/account/orders"}>
-            Mes Commandes
-          </Menu.Item>
-        </Link>
+        {user.typeUser === "Customer" && (
+          <Link to="/account/orders">
+            <Menu.Item active={location.pathname === "/account/orders"}>
+              Mes Commandes
+            </Menu.Item>
+          </Link>
+        )}
         {user.userId.typeUser === "Merchant" && (
           <>
             <Link to="/account/store-management">

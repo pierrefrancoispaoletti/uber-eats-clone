@@ -5,12 +5,14 @@ import AdminPanel from "./AdminPanel/AdminPanel";
 import AddCategoryModal from "./Modals/Category/AddCategoryModal";
 import DeleteCategoryModal from "./Modals/Category/DeleteCategoryModal";
 import EditCategoryModal from "./Modals/Category/EditCategoryModal";
+import AddProductModal from "./Modals/Products/AddProductModal";
 
-const StoreManagement = ({ user, getMerchants }) => {
+const StoreManagement = ({ user, getMerchants, getCategories, categories, getProducts }) => {
   const [message, setMessage] = useState(undefined);
   const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
   const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
   const [openDeleteCategoryModal, setOpenDeleteCategoryModal] = useState(false);
+  const [openAddProductModal, setOpenAddProductModal] = useState(false);
   const [categoryId, setCategoryId] = useState("");
   const [categoryName, setCategoryName] = useState("");
   useEffect(() => {
@@ -30,15 +32,18 @@ const StoreManagement = ({ user, getMerchants }) => {
           content={message?.message}
         />
       )}
-      <AdminPanel
+      {/* <AdminPanel
         openAddCategoryModal={openAddCategoryModal}
         setOpenAddCategoryModal={setOpenAddCategoryModal}
-      />
+        openAddProductModal={openAddProductModal}
+        setOpenAddProductModal={setOpenAddProductModal}
+      /> */}
       <Shop
         merchantId={user._id}
         setCategoryId={setCategoryId}
         setCategoryName={setCategoryName}
-        openEditCategoryModal={openEditCategoryModal}
+        setOpenAddCategoryModal={setOpenAddCategoryModal}
+        setOpenAddProductModal={setOpenAddProductModal}
         setOpenEditCategoryModal={setOpenEditCategoryModal}
         setOpenDeleteCategoryModal={setOpenDeleteCategoryModal}
       />
@@ -47,6 +52,7 @@ const StoreManagement = ({ user, getMerchants }) => {
         openAddCategoryModal={openAddCategoryModal}
         setOpenAddCategoryModal={setOpenAddCategoryModal}
         setMessage={setMessage}
+        getCategories={getCategories}
       />
       <EditCategoryModal
         merchantId={user._id}
@@ -55,6 +61,7 @@ const StoreManagement = ({ user, getMerchants }) => {
         openEditCategoryModal={openEditCategoryModal}
         setOpenEditCategoryModal={setOpenEditCategoryModal}
         setMessage={setMessage}
+        getCategories={getCategories}
       />
       <DeleteCategoryModal
         merchantId={user._id}
@@ -63,6 +70,15 @@ const StoreManagement = ({ user, getMerchants }) => {
         openDeleteCategoryModal={openDeleteCategoryModal}
         setOpenDeleteCategoryModal={setOpenDeleteCategoryModal}
         setMessage={setMessage}
+        getCategories={getCategories}
+      />
+      <AddProductModal
+        categoryName={categoryName}
+        getProducts={getProducts}
+        setMessage={setMessage}
+        categories={categories}
+        openAddProductModal={openAddProductModal}
+        setOpenAddProductModal={setOpenAddProductModal}
       />
     </>
   );

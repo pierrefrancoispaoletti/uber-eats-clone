@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Placeholder } from "semantic-ui-react";
+import { Button, Container, Divider, Placeholder } from "semantic-ui-react";
 import { uniqueKeyID } from "../../../../utils";
 import Product from "../../../../containers/Product/Product.container";
 import { useLocation } from "react-router-dom";
@@ -8,8 +8,10 @@ const Products = ({
   categoryLoader,
   categories,
   setCategoryId,
-  setOpenEditCategoryModal,
   setCategoryName,
+  setOpenAddProductModal,
+  setOpenAddCategoryModal,
+  setOpenEditCategoryModal,
   setOpenDeleteCategoryModal,
 }) => {
   const location = useLocation();
@@ -23,35 +25,65 @@ const Products = ({
     setCategoryName(catName);
     setOpenDeleteCategoryModal(true);
   };
+
+  const handleClickOnAddProductModal = (catName) => {
+    setCategoryName(catName);
+    setOpenAddProductModal(true);
+  };
   return (
     <div className="products">
+      {location.pathname === "/account/store-management" && (
+        <>
+          <Divider clearing />
+          <Button
+            color="blue"
+            icon="plus"
+            content="Ajouter une catégorie"
+            onClick={(e) => setOpenAddCategoryModal(true)}
+          />
+          <Divider clearing />
+        </>
+      )}
       <ul className="products__header">
         {/* la categorie sur laquelle je boucle renvois tous les produits qui correspondent a la categorie courante  */}
 
         {categories?.map((category) => (
           <li key={uniqueKeyID()}>
             {!categoryLoader ? (
-              <Container text>
+              <>
                 <h2>{category?.name}</h2>
                 {location.pathname === "/account/store-management" && (
                   <>
                     <Button
                       color="green"
-                      circular
-                      icon={{ name: "edit" }}
+                      content={`Editer ${category.name}`}
+                      compact
+                      icon="edit"
                       onClick={(e) =>
                         handleClickOnEditButton(category?._id, category?.name)
                       }
                     />
                     <Button
-                    onClick={(e) => handleClickOnDeleteModal(category?._id, category?.name)}
+                      onClick={(e) =>
+                        handleClickOnDeleteModal(category?._id, category?.name)
+                      }
                       color="red"
-                      circular
-                      icon={{ name: "trash alternate" }}
+                      compact
+                      content={`Supprimer ${category.name}`}
+                      icon="trash alternate"
                     />
+                    <Divider hidden fitted />
+                    <Button
+                      color="black"
+                      compact
+                      icon="plus"
+                      content={`Ajouter un produit dans ${category.name}`}
+                      onClick={(e) => handleClickOnAddProductModal(category.name)}
+                    />
+                    <Divider hidden />
                   </>
                 )}
-              </Container>
+              </>
             ) : (
               <Placeholder>
                 <Placeholder.Paragraph>

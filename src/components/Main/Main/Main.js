@@ -11,6 +11,7 @@ import Checkout from "../../../containers/Checkout/Chekout.container";
 import Register from "../../Register/Register";
 import RegisterForm from "../../Register/RegisterForm";
 import Account from "../../../containers/Account/Account";
+import Payment from "../../Payment/Payment";
 
 const Main = ({ shops, user, loading }) => {
   const location = useLocation();
@@ -40,10 +41,13 @@ const Main = ({ shops, user, loading }) => {
         </Route>
         <Route path="/cart">{user ? <Checkout /> : <Redirect to="/" />}</Route>
         <Route path="/register/:registerType">
-        {!user ? <RegisterForm />: <Redirect to="/" />}
+          {!user ? <RegisterForm /> : <Redirect to="/" />}
         </Route>
         <Route path="/account">
-        {user ? <Account />: <Redirect to="/login" />}
+          {user ? <Account /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/payment">
+          {user ? <Payment /> : <Redirect to="/login" />}
         </Route>
       </Switch>
     </div>

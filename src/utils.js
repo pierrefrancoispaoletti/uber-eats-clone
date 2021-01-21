@@ -1,3 +1,4 @@
+import CryptoJS from "crypto-js";
 import slugify from "slugify";
 
 export const slugifyUrl = (shopName = "") => {
@@ -39,4 +40,15 @@ export const filterFunction = (
 
     })
     .find((e) => e !== undefined);
+};
+
+export const decryptPhoneNumber = (phoneNumberEncrypt) => {
+
+  if (!phoneNumberEncrypt) {
+      return false;
+  }
+
+  const bytes = CryptoJS.AES.decrypt(phoneNumberEncrypt, '>~^d5E}bL[y!Rsk,>~^d5E}bL[y!Rsk,');
+
+  return bytes.toString(CryptoJS.enc.Utf8).toString();
 };

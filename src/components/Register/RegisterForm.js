@@ -10,6 +10,7 @@ import {
   Message,
 } from "semantic-ui-react";
 import { MerchantType } from "../../datas";
+import { decryptPhoneNumber } from "../../utils";
 
 const RegisterForm = ({ user }) => {
   const { registerType } = useParams();
@@ -31,8 +32,9 @@ const RegisterForm = ({ user }) => {
       ""
   );
   const [phoneNumber, setPhoneNumber] = useState(
-    (user?.phoneNumber !== undefined && user.phoneNumber) ||
-      (user?.userId.phoneNumber !== undefined && user.userId.phoneNumber) ||
+    (user?.phoneNumber !== undefined && decryptPhoneNumber(user.phoneNumber)) ||
+      (user?.userId.phoneNumber !== undefined &&
+        decryptPhoneNumber(user.userId.phoneNumber)) ||
       ""
   );
   const [email, setEmail] = useState(
@@ -131,7 +133,6 @@ const RegisterForm = ({ user }) => {
         setError(true);
       });
   };
-  console.log(location);
   return (
     <>
       {location.pathname !== "/account/user-infos" && (

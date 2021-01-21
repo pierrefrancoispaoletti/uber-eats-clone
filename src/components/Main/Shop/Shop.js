@@ -17,15 +17,17 @@ const Shop = ({
   setOpenAddProductModal,
   setOpenAddCategoryModal,
   setOpenEditCategoryModal,
-  setOpenDeleteCategoryModal
+  setOpenDeleteCategoryModal,
 }) => {
   const location = useLocation();
   let { id } = useParams();
 
   useEffect(() => {
-    getCategories(
-      location.pathname === "/account/store-management" ? merchantId : id
-    );
+    if (merchantId || id) {
+      getCategories(
+        location.pathname === "/account/store-management" ? merchantId : id
+      );
+    }
   }, []);
 
   const findShopById = shops

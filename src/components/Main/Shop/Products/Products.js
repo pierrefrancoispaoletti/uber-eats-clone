@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Divider, Placeholder } from "semantic-ui-react";
+import { Button, Divider, Placeholder } from "semantic-ui-react";
 import { uniqueKeyID } from "../../../../utils";
 import Product from "../../../../containers/Product/Product.container";
 import { useLocation } from "react-router-dom";

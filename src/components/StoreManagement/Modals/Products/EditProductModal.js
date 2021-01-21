@@ -25,8 +25,6 @@ const EditProductModal = ({
     options: productToFind?.options,
   };
 
-  console.log(catId);
-
   useEffect(() => {
     setProductDescription(productToFind.description);
     setProductName(productToFind.name);

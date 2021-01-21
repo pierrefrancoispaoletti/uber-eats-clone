@@ -28,12 +28,10 @@ const ProductModal = ({
   const location = useLocation();
 
   useEffect(() => {
-    if (!subCategories) {
-      axios
-        .get(`/products/subcategory/category/${catId}`)
-        .then((response) => setSubCategories(response.data.data));
-    }
-  }, []);
+    axios
+      .get(`/products/subcategory/category/${catId}`)
+      .then((response) => setSubCategories(response.data.data));
+  }, [isOpenProductModal]);
 
   const filteredSubCategories = (productSubId) => {
     return subCategories
@@ -103,7 +101,7 @@ const ProductModal = ({
       onClose={() => {
         setIsOpenProductModal(false);
         setO({ options: ["sans options"] });
-        setSubCategories([])
+        setSubCategories([]);
       }}
     >
       <Modal.Header>{productToFind?.name}</Modal.Header>

@@ -11,6 +11,7 @@ const Product = ({ catId, products,shop }) => {
   const [isOpenProductModal, setIsOpenProductModal] = useState(false);
   const [productId, setProductId] = useState("");
   const [currentProducts, setCurrentProducts] = useState([]);
+  
 
   const uniqueProducts = Array.from(
     new Set(currentProducts.map((product) => product?.subCategoryId))
@@ -20,7 +21,7 @@ const Product = ({ catId, products,shop }) => {
 
   useEffect(() => {
     setProductLoading(true);
-    if (catId) {
+    if (catId !== undefined) {
       axios
         .get(`/products/category/${catId}`)
         .then((response) => {
@@ -29,7 +30,7 @@ const Product = ({ catId, products,shop }) => {
         .catch((e) => console.log(e))
         .finally(() => setProductLoading(false));
     }
-  }, [products]);
+  }, []);
 
   const handleClick = (id) => {
     setIsOpenProductModal(true);

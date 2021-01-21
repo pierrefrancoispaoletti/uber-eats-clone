@@ -31,9 +31,6 @@ const AddProductModal = ({
   useEffect(() => {    
     setProductCategory(categoryId)
   }, [categoryId]);
-
-  
-  console.log(productCategory)
   const checkFormErrors = (userObject) => {
     for (let key of Object.keys(userObject)) {
       if (userObject[key].length === 0) {

@@ -14,19 +14,23 @@ const ShopMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case GET_CATEGORIES: {
       store.dispatch(setCatLoading(true));
-      Axios({
-        method: "get",
-        url: `/category/${action.id}`,
-      })
-        .then((response) => {
-          store.dispatch(setCategories(response.data.data));
+      if (action.id !== undefined) {
+        Axios({
+          method: "get",
+          url: `/category/${action.id}`,
         })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => {
-          store.dispatch(setCatLoading(false));
-        });
+          .then((response) => {
+            store.dispatch(setCategories(response.data.data));
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+            store.dispatch(setCatLoading(false));
+          });
+        next(action);
+        break;
+      }
       next(action);
       break;
     }

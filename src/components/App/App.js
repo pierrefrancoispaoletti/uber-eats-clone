@@ -19,7 +19,6 @@ function App({ user, setUser, setCart, cart }) {
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("cart")) !== []) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
-      console.log(cart[0]);
       setCart(localCart);
     }
   }, []);
